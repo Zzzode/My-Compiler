@@ -2,7 +2,19 @@
 ![Author](https://img.shields.io/badge/Author-Zzzcode-blue.svg?style=flat)
 
 # Simple C Compiler
-[TOC]
+
+<!-- TOC -->
+- [Simple C Compiler](#simple-c-compiler)
+  - [Introduction](#introduction)
+  - [Environment](#environment)
+  - [Instruction](#instruction)
+  - [Architecture](#architecture)
+  - [ChangeLog](#changelog)
+    - [v0.0(2019-05-23)](#v002019-05-23)
+  - [Declaration](#declaration)
+  - [FAQ](#faq)
+  - [Thanks](#thanks)
+
 
 ## Introduction
 本项目为编译原理课程项目，目的是完成一个C语言编译器。
