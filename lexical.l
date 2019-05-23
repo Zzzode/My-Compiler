@@ -10,23 +10,18 @@ int yywrap();
 int make_token_val(int tokentype, int tokenname);// return token_name, fill the yylval for yacc
 int datatype_val(int tokenname);
 void printtoken(Token yylval);
-void str_cpy(char *a, char *b, int l, int r); 
-// copy string from b to a, b-index range[l,r),a is an empty string
-// not using lib-function strcpy(), because I'm not sure whether there is '\0' in yytext 
 void comment();
 void lex_error(const char* error_info);
 %}
-
+//only support the escape charactor of \n \t \0 \r, in other cases \letter is regareded as letter
 //regular expression
 digit [0-9]
 letter [a-zA-Z]
 id (_|{letter})(_|{letter}|{digit})*    //identifier
 integer {digit}+  
 real {digit}*\.{digit}+     //real number 
-char \'[^']\'       //c-style char: 'c'
-string \"[^"]*\"    // c-style string: "content"
 newline \n
-commet \/\/     // c++-style comment: //
+commet ^\/\/     // c++-style comment: // in linehead
 whitespace [ \t]+
 
 %%
@@ -110,9 +105,9 @@ whitespace [ \t]+
    
 {real}      {return datatype_val(REAL);}
 {interger}  {return datatype_val(INT);}
-{string}    {return datatype_val(STR);}
-{char}      {return datatype_val(CHAR);}
 {id}        {return datatype_val(ID);}
+["].*       {return datatype_val(STR);}
+['].*       {return datatype_val(CHAR);}        
 .*          {lex_error("wrong identifier");}
 
 %%
@@ -145,11 +140,14 @@ int datatype_val(int token_name) //in case of literal constant or id
 {
     yylval = (Token)malloc(sizeof(struct token_attri));
     yylval->token_type = token_name;
+    char *str = yylval->token_val.token_string;
     int n = yyleng; 
+    int j = 0;
     if(n > 32)
     {
         n = 32;
         lex_error("max-length is 32!");
+        return -1;
     }
     switch(token_name)
     {
@@ -160,13 +158,68 @@ int datatype_val(int token_name) //in case of literal constant or id
             sscanf(yytext,"%d", &(yylval->token_val.int_num));
             return CONST_INT;
         case:CHAR
-            sscanf(yytext,"%c", &(yylval->token_val.ch));
+            if(yytext[1] == '\\' && yytext[3] == '\'')
+            {
+                switch(yytext[2])
+                {
+                    case:'0'
+                        ch = '\0';
+                        break;
+                    case:'n'
+                        ch = '\n';
+                        break;
+                    case:'r'
+                        ch = '\r';
+                        break;
+                    case:'t'
+                        ch = '\t';
+                        break;
+                    default:
+                        ch = yytext[2];
+                }
+            }
+            else
+            {
+                if(yytext[2] == '\'')
+                    ch = yytext[1];
+                else
+                    lex_error("wrong charactor!");
+            }
+            else
+                lex_error("wrong charactor!");
             return CONST_CHAR;
         case:STR
-            str_cpy(yylval->token_val.token_string, yytext, 1, n-1);
+            if(yytext[n-1] != '\"')
+                lex_error("wring string!");
+            for(int i = 1; i < n; i++)
+            {
+                if(yytext[i] != '\\')
+                    str[j++] = yytext[i];
+                else
+                {
+                    switch(yytext[++i])
+                    {
+                        case:'0'
+                            ch = '\0';
+                            break;
+                        case:'n'
+                            ch = '\n';
+                            break;
+                        case:'r'
+                            ch = '\r';
+                            break;
+                        case:'t'
+                            ch = '\t';
+                            break;
+                        default:
+                            str[j++] = yytext[i];
+                    }
+                }
+            }
+            str[j] = '\0';
             return CONST_STR;
         case:ID
-            str_cpy(yylval->token_val.token_string, yytext, 0, n);
+            strcpy(str, yytext);
             return ID;
     }
     return tokenname;
@@ -180,18 +233,11 @@ void printtoken(Token yylval) //displaying the result of lex
 void lex_error(const char* error_info)
 {
     printf("error in line %d: %s\n", lineno, error_info);
+    exit(1);
 }
 
 void comment() //ignore the comment
 {
     char c;
     while((c = getchar()) != '\n');
-}
-
-void str_cpy(char *a, char *b, int l, int r)
-{
-    int j = 0;
-    for(int i = l; i < r; i++)
-        a[j++] = b[i];
-    a[j] = '\0';
 }
