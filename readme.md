@@ -1,23 +1,29 @@
-# 简单C语言编译器
+# Simple C Compiler
+![Author](https://img.shields.io/badge/Author-zxhcho-blue.svg?style=flat)
+![Author](https://img.shields.io/badge/Author-Zzzcode-blue.svg?style=flat)
 
-## 1 介绍
+## Introduction
 本项目为编译原理课程项目，目的是完成一个C语言编译器。
 
-## 2 环境和依赖
+## Environment
 - 编译环境：Visual Studio 2017
 - 工作语言：C
 - 目标语言：C
 - 生成目标语言：x86汇编
 
-## 3 使用说明
+## Instruction 
 暂无
 
-## 4 代码结构目录
+## Architecture
 暂无
 
-## 5 常见问题
+## Change Log
+
+## Declaration
 暂无
 
-## 6 作者及联系方式
->@Author: zxhcho, Zzzcode
+## FAQ
+暂无
 
+## Thanks
+暂无
