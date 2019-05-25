@@ -1,0 +1,29 @@
+program test;
+var
+	x : integer;
+function go(a : integer): integer;
+var
+	b : integer;
+	c : integer;
+begin
+	b := a-1;
+	c := a-2;
+	if a = 1 then go := 1
+	else begin
+		if a = 2 then go := 1
+		else begin
+			go := go(b);
+			go := go(c) + go;
+		end
+		;
+	end
+	;
+end
+;
+
+begin
+	x := go(10);
+	writeln(x);
+
+end
+.
