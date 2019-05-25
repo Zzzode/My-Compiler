@@ -12,6 +12,7 @@ int make_token(int tokentype, int tokenname);// return token_index, fill the yyl
 int make_data_val(int tokenname);
 int make_id(int tokenname);
 void lex_error(const char* error_info);
+void printtoken(Token yylval);
 %}
 
 digit [0-9]

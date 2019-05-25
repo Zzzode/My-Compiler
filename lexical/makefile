@@ -6,3 +6,6 @@ lex.yy.o: lex.yy.c
 
 lex.yy.c: lexical.l  lexical.h
 	lex lexical.l
+
+clean:
+	rm lex.yy.c lex.yy.o lexer

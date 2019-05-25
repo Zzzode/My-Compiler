@@ -45,6 +45,4 @@ typedef struct token_attri{
     }token_val;
 } *Token; // attribute of a token 
 
-void printtoken(Token yylval);
-
 #endif // !_LEXI_H_
