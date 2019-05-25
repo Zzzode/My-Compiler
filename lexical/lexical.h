@@ -3,7 +3,7 @@
 //headfile for lexical
 
 enum Token_type{
-    OPERATOR, RESERVED,
+    OPERATOR, RESERVE,
     //system type
     SYS_CON, SYS_FUN, SYS_PROC, SYS_TYPE,
     //identify an id
@@ -15,22 +15,17 @@ enum Token_type{
 };
 
 enum Token_name{
-    //operators
-    LP = 17, RP, LB, RB, DOT, COMMA, COLON, MUL, DIV, DIV_R, UNEQUAL, NOT,
-    PLUS, MINUS, GE, GT, LE, LT, EQUAL, NE, ASSIGN, MOD, DOTDOT, SEMI,
+    //operators and delimers
+    LP = 17, RP, LSB, RSB, LCB, RCB, COMMA, MUL, DIV, NE, NOT, AND, OR,
+    PLUS, MINUS, GE, GT, LE, LT, EQUAL, ASSIGN, MOD, SEMI,
     // reserve words
-    AND, ARRAY, MY_BEGIN, CASE, CONST, DO, DOWNTO, ELSE,
-    END, FOR, FUNCT, GOTO, IF, IN, OF, OR, PACKED, 
-    PROC, PROGRAM, RECORD, REPEAT, SET, THEN, TO, 
-    TYPE, UNTIL, VAR, WHILE, WITH,
-    // SYS_CON
+    ELSE, IF, RETURN, VOID, WHILE, CONST, VAR,
+    // sys_constant
     FALSE, MAXINT, TRUE,
-    // SYS_FUNCT
-    ABS, CHR, ODD, ORD, PRED, SQR, SQRT, SUCC,
-    // SYS_PROC
-    WRITE, WRITELN, READ,
+    // sys_function
+    ABS, SQRT, MAX, MIN,
     // SYS_TYPE for declaration
-    BOOL, CHAR, INT, REAL, STR
+    BOOL, INT, REAL, STR, CHAR
 } ; 
 
 typedef struct token_attri{

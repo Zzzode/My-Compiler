@@ -1,0 +1,31 @@
+int main()
+{
+    int a = 1;
+    int a_ = MAX_INT;
+    double b = 1.0;
+    string c = "abc";
+    string d = "\ra\rb";
+    char d = 'a';
+    char e = '\r';
+    bool tag = true;
+    bool tag_ = false;
+    while(a)
+    {
+        if(a == a_)
+        {
+            a = abs(a);
+            max(a,a_);
+            min(a,a_);
+            b = sqrt(b);
+        }
+        else
+        {
+            return;
+        }
+    }
+}
+
+void func()
+{
+
+}
