@@ -11,6 +11,7 @@
   - [Architecture](#architecture)
   - [ChangeLog](#changelog)
     - [v0.0(2019-05-23)](#v002019-05-23)
+    - [v0.0(2019-05-25)](#v002019-05-25)
   - [Declaration](#declaration)
   - [FAQ](#faq)
   - [Thanks](#thanks)
@@ -34,6 +35,8 @@
 ## ChangeLog
 ### v0.0(2019-05-23)
 创建了任务，开始开发。
+### v0.0(2019-05-25)
+添加了词法分析的部分内容。
 
 ## Declaration
 暂无
