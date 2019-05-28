@@ -36,15 +36,13 @@ enum Tokens{
 };
 
 // fields of identifier
-enum Identifier
-{
+enum Identifier{
     Token, Hash,  Name,   Type,   Class,
     Value, BType, BClass, BValue, IdSize
 };
 
 // types of variable/function
-enum Variable_Types
-{
+enum Variable_Types{
     CHAR, INT, PTR
 };
 
