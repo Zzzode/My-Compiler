@@ -17,8 +17,7 @@ char *src, *oldsrc;                // 指向代码字符串的指针
 char *DATA;                        // 数据段
 
 // 基础汇编指令集
-enum
-{
+enum Instructions{
     LEA, IMM, JMP, CALL, JZ, JNZ, ENT,
     ADJ, LEV, LI,  LC,   SI, SC,  PUSH, 
     OR,  XOR, AND, EQ,   NE, LT,  GT, LE, GE,
@@ -28,8 +27,7 @@ enum
 };
 
 // tokens and classes (operators last and in precedence order)
-enum
-{
+enum Tokens{
     Num = 128,
     Fun,  Sys,  Glo,  Loc, Id, 
     Char, Else, Enum, If,  Int, Return, Sizeof, While, 
@@ -38,14 +36,14 @@ enum
 };
 
 // fields of identifier
-enum
+enum Identifier
 {
     Token, Hash,  Name,   Type,   Class,
     Value, BType, BClass, BValue, IdSize
 };
 
 // types of variable/function
-enum
+enum Variable_Types
 {
     CHAR, INT, PTR
 };
