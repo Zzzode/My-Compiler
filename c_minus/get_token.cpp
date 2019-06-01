@@ -1,6 +1,6 @@
 #include <iostream>
+#include <string.h>
 #include <cctype>
-#include <vector>
 #include <unordered_map>
 #include "c_minus.h"
 using namespace std;
@@ -10,24 +10,15 @@ extern char token;
 extern char * src;
 extern int lineno;
 extern int layer;
+extern int decl_type;
 extern int token_in_val;
 extern double token_d_val;
 extern char token_str_val[64];
 extern unordered_map<int,ID> symtab; 
-
-//calculat the hash value of an id
-int hash_str(char *s)
-{
-    int ans = 0;
-    while(*s!='\0')
-        ans = ans * 147 + *s++;
-    return ans;
-}
+int Hash;//mark the cuurent token
 
 void next()
 {
-    char * last;
-    int hash;
     while((token = *(src++)))
     {
         if(token == '\n')
@@ -42,7 +33,7 @@ void next()
          // char literal constant ,we only support the escape of \n, \t, \r
         else if (token == '\'')
         {
-            token = Char;
+            token = Con_Char;
             token_in_val = *(src++);//store char as int type
             if(token_in_val == '\\')//escape charactor
             {
@@ -54,14 +45,14 @@ void next()
                     token_in_val = '\r';
                 else
                 {
-                    fprintf(stderr,"wrong escape charactor! in line %d\n", lineno);
+                    cout << "wrong escape charactor! in line " << lineno << endl;
                     exit(1);
                 }
                 ++src;
             }
             if(*src != '\'')
             {
-                fprintf(stderr,"lack \' of literal charactor in line %d\n", lineno);
+                cout << "lack \' of literal charactor in line " << lineno << endl;
                 exit(1);
             }
             return;
@@ -88,10 +79,10 @@ void next()
             token_str_val[cnt] = '\0';
             if(cnt == 63 && token != '"')
             {
-                fprintf(stderr,"string length out of range 64, in line %d\n", lineno);
+                cout << "string length out of range 64, in line " << lineno << endl;
                 exit(1);
             }
-            token = Str;
+            token = Con_Str;
             return;
         }
 
@@ -231,16 +222,41 @@ void next()
 
         else if (isalpha(token) || (token == '_')) // in case of an id
         {
-            // get hash of the id, and store the string ptr in last
-            last = src-1;
-            hash = token;
-            while(isalpha(token) || isdigit(token) || (token == '_'))
-                hash = hash * 147 + *(src++);
-            
-            symtab[hash].Name = last;
-            symtab[hash].Hash = hash;
-            symtab[hash].Token = token = Id;//mark the token as an id
-            //add other attributes in syntax analysis
+            // get Hash of the id, and store the string ptr in last
+            Hash = token;
+            int index = 0;
+            char temp[64];
+            temp[index++] = token;
+            while (isalpha(token) || isdigit(token) || (token == '_'))
+            {
+                Hash = Hash * 147 + *(src++);
+                temp[index++] = token;
+                if(index > 63)
+                {
+                    cout << "identifier out of range(64) in line " 
+                        << lineno << endl;
+                    exit(1);
+                }
+            }
+            temp[index] = '\0';
+            if(symtab.find(Hash) == symtab.end())//no duplicate
+            {
+                strcpy(symtab[Hash].Name, temp);
+                symtab[Hash].Token = token = Id; //mark the token as an id
+                symtab[Hash].info.push_back(id_info(decl_type, layer, 0, 0));
+                //default value attribute is 0
+            }
+            else//duplicate id name
+            {
+                if(symtab[Hash].info.back().Layer >= layer)
+                {
+                    cout << "duplicate definition of identifier in line " 
+                        << lineno << endl;
+                    exit(1);
+                }
+                else
+                    symtab[Hash].info.push_back(id_info(decl_type, layer, 0, 0));
+            }
             return;
         }
 
@@ -249,7 +265,7 @@ void next()
             token_in_val = token-'0';
             while(isdigit(token = *(src++)))
                 token_in_val = token_in_val*10 + token-'0';
-            token = Int;
+            token = Con_Int;
             if(token == '.')
             {
                 double dot = 0.1;
@@ -259,7 +275,7 @@ void next()
                     token_d_val += dot*(token-'0');
                     dot /= 10;
                 }    
-                token = Double;
+                token = Con_Double;
             }
             return;
         }
@@ -268,9 +284,9 @@ void next()
                     || token == ';' || token == '{' || token == '}' || token == ':')
             return;
 
-        else
+        else if(!isspace(token))//illegal charactor
         {
-            fprintf(stderr,"illegal charactor in line %d\n", lineno);
+            cout << "illegal charactor in line "<< lineno << endl;
             exit(1);
         }
     }

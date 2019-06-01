@@ -1,61 +1,14 @@
 //BNF for our c_minus language
 
-program : declaration_list
-declaration_list : declaration_list declaration | declaration
-declaration : var_declaration | funct_declaration
-// a program consists of a list of declaration, including functions and variables
-
-var_declaration : type_specifier ID_list SEMI 
-                | type_specifier ID LSB CONST_INT RSB SEMI
-ID_list : ID_list COMMA ID | ID
-type_specifier : INT | DOUBLE | BOOL | CHAR | VOID
-//declarations for variable, pointer and array 
-
-fuc_declaration : type_specifier ID LP paras RP compond_stmt
-paras : para_list | VOID
-para_list : para_list COMMA para | para
-para : type_specifier ID 
-        | type_specifier ID LSB RSB
-        | type_specifier ADDR ID 
-// function declaration and its definition
-// pass the paras by value, reference and pointer
-
-compond_stmt: LCB local_declaration stmt_list RCB
-//a compond statement {...}, contains some local statements 
-
-local_declaration : local_declaration var_declaration | empty
-stmt_list : stmt_list stmt  | empty
-//both nullable
-
-stmt : expression_stmt | compond_stmt | 
-            selection_stmt | iteration_stmt | return_stmt
-//five kinds of statement
-
-expression_stmt : expression SEMI | SEMI 
-selection_stmt : if LP expression RP  stmt 
-                               | if LP expression RP  stmt ELSE stmt
-iteration_stmt : WHILE LP expression RP stmt
-return_stmt : RETURN SEMI | RETURN expression SEMI
-// if else while and return 
-
-expression : l_value ASSIGN expression | simple_expression
-l_value : ID | ID LSB expression RSB
-//left value contains id, pointer, array 
-
-simple_expression : add_expression relop add_expression
-                                        | add_expression
-relop : LE | LT | GE | GT | EQUAL | NE
-// if contain relop , return bool type
-
-add_expression : add_expression addop term | term
-addop : PLUS | MINUS
-term : term mulop factor | factor
-muiop : MUL | DIV
-factor : LP expression RP | l_value | call | literal_const
-literal_const : CONST_INT | CONST_DOUBLE | CONST_CHAR | BOOL | FALSE
-// the factor can be a (expression) or left_value or a function call or a const_value
-
-call : ID LP args RP
-args : arg_list | empty
-arg_list : arg_list COMMA expression | expression
-//pass the args by id or an expression
+program : {glo_decl}+
+glo_decl : enum_decl | var_decl | func_decl
+enum_decl : 'enum' id '{' id '=''num' {',' id '=''num'} '}'
+var_decl : type {'*'} id { ',' {'*'} id} ';'
+func_decl : type {'*'} id '(' para_decl ')' '{' body_decl '}'
+para_decl : type {'*'} id {',' type {'*'} id}
+body_decl : {var_decl} {stmt}
+stmt : empty_stmt | no_empty_stmt
+no_empty_stmt : if_stmt | while_stmt 
+                |'{' stmt '}' | 'return' exp ';'| exp ';'
+if_stmt : 'if' '(' exp ')' stmt {else no_empty_stmt}
+while_stmt : 'while' '(' exp ')' no_empty_stmt  
