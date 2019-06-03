@@ -1,6 +1,5 @@
-# BNF for our c_minus language
+//BNF for our c_minus language
 
-```
 program : {glo_decl}+
 glo_decl : enum_decl | var_decl | func_decl
 enum_decl : 'enum' id '{' id '=''num' {',' id '=''num'} '}'
@@ -12,5 +11,4 @@ stmt : empty_stmt | no_empty_stmt
 no_empty_stmt : if_stmt | while_stmt 
                 |'{' stmt '}' | 'return' exp ';'| exp ';'
 if_stmt : 'if' '(' exp ')' stmt {else no_empty_stmt}
-while_stmt : 'while' '(' exp ')' no_empty_stmt
-```
+while_stmt : 'while' '(' exp ')' no_empty_stmt  
