@@ -3,7 +3,11 @@
 program : {glo_decl}+
 glo_decl : enum_decl | var_decl | func_decl
 enum_decl : 'enum' id '{' id '=''num' {',' id '=''num'} '}'
-var_decl : type {'*'} id { ',' {'*'} id} ';'
+var_decl : type {'*'} id {'=' num}{ ',' id {'=' num}} ';'
+//Assign is allowed in var_decl
+//ptr assign in declaration is not allowed
+//different from class-c every id's type is in the head
+
 func_decl : type {'*'} id '(' para_decl ')' '{' body_decl '}'
 para_decl : type {'*'} id {',' type {'*'} id}
 body_decl : {var_decl} {stmt}

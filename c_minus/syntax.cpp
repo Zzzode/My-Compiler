@@ -7,28 +7,31 @@ using namespace std;
 extern int token;
 extern int lineno;
 extern int layer;
-extern int decl_type; //type of a declaration
-extern int Hash;//hash of the token
-extern unordered_map<int, ID> symtab;
+extern int decl_type; 
+extern int Hash;
+extern bool is_decl;
+extern int token_in_val;
+extern double token_d_val;
+extern vector<unordered_map<int, ID>> symtab;
 
 void match(int tk)
 {
-    if(token == tk)
-        next();
-    else
+    if (token != tk)
     {
-        cout << "syntax error in line " << lineno << endl;
+        cout << tk << " unmatch in line " << lineno << endl;
         exit(1);
     }
 }
-
 
 //program : {glo_decl}+
 void program()
 {
     next();
-    while(token > 0)
+    while (token > 0)
+    {
         glo_decl();
+        next();
+    }
 }
 
 //glo_decl : enum_decl | var_decl | func_decl
@@ -39,88 +42,116 @@ void glo_decl()
 {
     int type, i;
 
-    if (token == Enum)
+    if (token == Enum)//enum part
     {
-        match(Enum);
-        if (token != '{')
-            match(Id);
-        else
-        {
-            match('{');
-            enum_decl();
-            match('}');
-        }
-        match(';');
+        next();
+        is_decl = true;
+        enum_decl();
+        is_decl = false;
+        match('{');
+        return;
     }
 
-    else if (token == Int)
+    //function or variable part
+    if (token == Int)
     {
         decl_type = INT;
-        match(Int);
+        match(Int);next();
     }
     else if (token == Double)
     {
         decl_type = DOUBLE;
-        match(Double);
+        match(Double);next();
     }
     else if (token == Char)
     {
         decl_type = CHAR;
-        match(Char);
+        match(Char);next();
     }
 
-    while(token != ';' && token != '}')//end of var_decl or func_decl
+    while (token == Mul) //use offset to mark pointer
     {
-        while(token == Mul)//use offset to mark pointer
-        {
-            match(Mul);
-            decl_type = decl_type + PTR;
-        }
+        match(Mul);next();
+        decl_type = decl_type + PTR;
+    }
 
-        if(token != Id)
-        {
-            cout << "function or variable declaration error! lack identifier in line " 
-            << lineno << endl; 
-            exit(1);
-        }
-        match(Id);
+    if (token != Id)
+    {
+        cout << "function or variable declaration error! lack identifier in line "
+             << lineno << endl;
+        exit(1);
+    }
+    is_decl = true;
+    match(Id); next(); //function name or variable name
 
-        if(token == '(')
+    if (token == '(') //function
+    {
+        symtab[0][Hash].Class = Func;//'(' didn't change hash of id
+        match('(');next();
+        para_decl();
+        match(')');next();
+        match('{');next();
+        body_decl();
+        match('}');
+    }
+    else //variable, global declaration
+    {
+        var_decl();
+        while (token != ';')
         {
-            symtab[Hash].info.back().Class = Func;
-            symtab[Hash].info.back().In_value  = int(text+1);
-            //fill function memory
-            func_decl();
+            match(',');next();
+            match(Id);next();
+            var_decl();
+        }
+        match(';');
+    }
+    is_decl = false;
+}
+
+//enum_decl : 'enum' {id} '{' id '='num {',' id '='num} '}'
+void enum_decl()
+{
+    decl_type = INT;//default type for enum is INT
+    if (token == Id) //ignore the enum type name
+        next();
+    match('{');next();
+    while (token != '}')
+    {
+        match(Id);next();
+        match(Assign);next();
+        match(Con_Int);next();
+        symtab[0][Hash].In_value = token_in_val;
+        symtab[0][Hash].Class = Var;
+        match(',');next();
+    }
+}
+
+void var_decl()
+{
+    symtab[0][Hash].Class = Var;
+    if (token == Assign) //assign is not necessary
+    {
+        match(Assign);next();
+        if (decl_type == DOUBLE)
+        {
+            match(Con_Double);
+            symtab[0][Hash].D_value = token_d_val;
+        }
+        else if (decl_type == INT)
+        {
+            match(Con_Int);
+            symtab[0][Hash].In_value = token_in_val;
+        }
+        else if (decl_type == CHAR)
+        {
+            match(Con_Char);
+            symtab[0][Hash].In_value = token_in_val;
         }
         else
         {
-            symtab[Hash].info.back().Class = Var;
-            symtab[Hash].info.back().In_value = int(data);
-            //fill data memory
-            data = data + sizeof(int);
+            cout << "ptr assign is not allowed in decaration in line "
+                 << lineno << endl;
+            exit(1);
         }
-
-        if(token == ',')
-            match(',');
-    }
-    next();
-}
-
-//enum_decl : 'enum' id '{' id '='num {',' id '='num} '}'
-void enum_decl()
-{
-    int i = 0;
-    if(token != Id)
-    {
-        cout << "add a type name for enum in line " 
-            << lineno << endl;
-        exit(1);
-    }
-    next();
-    match('{')                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
-    while(token != '}')
-    {
-        if(token != Id)
-
     }
 }
