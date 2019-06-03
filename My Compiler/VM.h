@@ -1,5 +1,5 @@
-#ifndef _VM_H_
-#define _VM_H_
+#ifndef __VM_H__
+#define __VM_H__
 
 #define int long long // 修改int长度为64位，用于存放地址
 
@@ -46,4 +46,4 @@ enum Variable_Types{
     CHAR, INT, PTR
 };
 
-#endif // ! _VM_H_
+#endif // ! VM.h
