@@ -7,18 +7,18 @@
 using namespace std;
 //functions of lexical part
 
-extern char token;
-extern char *src;
+extern int token;
 extern int lineno;
-extern int layer;
 extern int decl_type;
+extern int Hash;
+extern int layer;
 extern bool is_decl;
 extern int token_in_val;
 extern double token_d_val;
 extern char token_str_val[64];
 extern vector<unordered_map<int, ID>> symtab;
-extern int Hash;
 extern char **reserve;
+extern char *src;
 
 void next()
 {
@@ -36,7 +36,7 @@ void next()
                 src++;
         }
 
-        // char literal constant ,we only support the escape of \n, \t, \r
+        // char literal constant ,we only support the escape of \n, \t, \r, '\\'
         else if (token == '\'')
         {
             token = Con_Char;
@@ -49,6 +49,8 @@ void next()
                     token_in_val = '\t';
                 else if (*src == 'r')
                     token_in_val = '\r';
+                else if (*src == '\\')
+                    token_in_val = '\\';
                 else
                 {
                     cout << "wrong escape charactor! in line " << lineno << endl;
@@ -67,7 +69,7 @@ void next()
         else if (token == '"') //string literal constant
         {
             int cnt = 0;
-            while ((token = *(src++)) != '"' && cnt < 63) //max string length is 63
+            while ((token = *(src++)) != '"' && cnt < 63) //max string layergth is 63
             {
                 if (token == '\\')
                 {
@@ -77,6 +79,8 @@ void next()
                         token_str_val[cnt++] = '\t';
                     else if (*src == 'r')
                         token_str_val[cnt++] = '\r';
+                    else if (*src == '\\')
+                        token_str_val[cnt++] = '\\';
                     ++src;
                 }
                 else
@@ -85,7 +89,7 @@ void next()
             token_str_val[cnt] = '\0';
             if (cnt == 63 && token != '"')
             {
-                cout << "string length out of range 64, in line " << lineno << endl;
+                cout << "string layergth out of range 64, in line " << lineno << endl;
                 exit(1);
             }
             token = Con_Str;
@@ -140,13 +144,15 @@ void next()
             return;
         }
 
-        else if (token == '!') // !=
+        else if (token == '!') // != or !
         {
             if (*src == '=')
             {
                 token = Ne;
                 ++src;
             }
+            else
+                token = Not;
             return;
         }
 
@@ -268,8 +274,7 @@ void next()
                 else
                 {
                     strcpy(symtab.back()[Hash].Name, temp);
-                    symtab.back()[Hash].Token = token = Id; //mark the token as an id
-                    symtab.back()[Hash].Type = decl_type;   //inherit type
+                    symtab.back()[Hash].Type = decl_type; //inherit type
                     symtab.back()[Hash].In_value = 0;
                     symtab.back()[Hash].D_value = 0;
                     //default value is 0
@@ -278,13 +283,13 @@ void next()
             }
             else
             {
-                int len = symtab.size();
-                while (len--)
+                int layer = symtab.size();
+                while (layer--)
                 {
-                    if (symtab[len].find(Hash) != symtab[len].end())
+                    if (symtab[layer].find(Hash) != symtab[layer].end())
                         break;
                 }
-                if (len == -1)
+                if (layer == -1)
                 {
                     cout << "unknown identifier in line "
                          << lineno << endl;

@@ -16,23 +16,26 @@ using namespace std;
 //pop back when leave a local area
 vector<unordered_map<int, ID>> symtab(1);
 
-int token;           //type of the next token
-int layer = 0;       //scope of id, 0 means global, the larger, the deeper
-int lineno = 1;      //line number of program
-int decl_type;       //type of the whole declaration
-int Hash;            //mark the cuurent id
-bool is_decl = true; //when lexical parse an id, judge legal or not
+int token;      //type of the token we got
+int lineno = 1; //line number of program
+int decl_type;  //type of the whole declaration
+int exp_type;   //type of expression answer
+int Hash;       //mark the cuurent id in lexical
+int layer;      //mark which layer an id belongs to in symtab
+
+bool is_decl = true;
+//when lexical parse an id, judge legal or not
 //if in decl mode, new id can be add into symtab, else illegal
 
 int token_in_val = 0;   //literal int value
 double token_d_val = 0; //literal double value
-//notice we onlt deal with dec int and double
+//notice we onlt deal with dec value
 
 char token_str_val[64]; //store literal constant of string
 char *src;              //buffer of file input
 
-char *reserve[9] = {"char", "int", "double", "else", "enum",
-                    "if", "return", "sizeof", "while"};
+char *reserve[12] = {"char", "int", "double", "else", "enum", "if",
+                     "return", "sizeof", "while", "and", "or", "not"};
 
 char *sys[8] = {"open", "read", "close", "printf",
                 "malloc", "memset", "memcmp", "exit"};
@@ -70,7 +73,6 @@ void init_symtab() //put build-in function into symtab
     for (int i = 0; i < 8; i++)
     {
         int hash = hash_str(temp[i]);
-        symtab[0][hash].Token = Id;     //store function address
         symtab[0][hash].Class = Sys;    //system function
         symtab[0][hash].Type = INT;     //variable data type or function return type
         symtab[0][hash].In_value = j++; //build-in function type
