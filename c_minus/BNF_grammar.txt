@@ -3,10 +3,21 @@
 program : {glo_decl}+
 glo_decl : enum_decl | var_decl | func_decl
 enum_decl : 'enum' id '{' id '=''num' {',' id '=''num'} '}'
+<<<<<<< HEAD
+var_decl : type {'*'} id {'=' num}{ ',' id {'=' num}} ';'
+//Assign is allowed in var_decl
+//ptr is default as NULL
+//different from class-c every id's type is in the head
+
+func_decl : type {'*'} id '(' func_para ')' '{' func_body '}'
+func_para : type {'*'} id {',' type {'*'} id}
+func_body : {var_decl} {stmt}
+=======
 var_decl : type {'*'} id { ',' {'*'} id} ';'
 func_decl : type {'*'} id '(' para_decl ')' '{' body_decl '}'
 para_decl : type {'*'} id {',' type {'*'} id}
 body_decl : {var_decl} {stmt}
+>>>>>>> f3c615b0b3e1c4dd059d465afe60fecad12c0f7f
 stmt : empty_stmt | no_empty_stmt
 no_empty_stmt : if_stmt | while_stmt 
                 |'{' stmt '}' | 'return' exp ';'| exp ';'

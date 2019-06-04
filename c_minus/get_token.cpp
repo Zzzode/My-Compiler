@@ -1,47 +1,53 @@
 #include <iostream>
 #include <string.h>
 #include <cctype>
+#include <vector>
 #include <unordered_map>
 #include "c_minus.h"
 using namespace std;
 //functions of lexical part
 
 extern char token;
-extern char * src;
+extern char *src;
 extern int lineno;
 extern int layer;
 extern int decl_type;
+extern bool is_decl;
 extern int token_in_val;
 extern double token_d_val;
 extern char token_str_val[64];
-extern unordered_map<int,ID> symtab; 
-int Hash;//mark the cuurent token
+extern vector<unordered_map<int, ID>> symtab;
+extern int Hash;
+extern char **reserve;
 
 void next()
 {
-    while((token = *(src++)))
+    while ((token = *(src++)))
     {
-        if(token == '\n')
+        if (token == '\n')
             lineno++;
 
-        else if(token == '#')//skip the macro, not supported
+        else if (isspace(token))
+            continue;
+
+        else if (token == '#') //skip the macro, not supported
         {
-            while (*src != 0 && *src != '\n') 
-            src++;
+            while (*src != 0 && *src != '\n')
+                src++;
         }
 
-         // char literal constant ,we only support the escape of \n, \t, \r
+        // char literal constant ,we only support the escape of \n, \t, \r
         else if (token == '\'')
         {
             token = Con_Char;
-            token_in_val = *(src++);//store char as int type
-            if(token_in_val == '\\')//escape charactor
+            token_in_val = *(src++);  //store char as int type
+            if (token_in_val == '\\') //escape charactor
             {
-                if(*src == 'n')
+                if (*src == 'n')
                     token_in_val = '\n';
-                else if(*src == 't')
+                else if (*src == 't')
                     token_in_val = '\t';
-                else if(*src == 'r')
+                else if (*src == 'r')
                     token_in_val = '\r';
                 else
                 {
@@ -50,7 +56,7 @@ void next()
                 }
                 ++src;
             }
-            if(*src != '\'')
+            if (*src != '\'')
             {
                 cout << "lack \' of literal charactor in line " << lineno << endl;
                 exit(1);
@@ -58,18 +64,18 @@ void next()
             return;
         }
 
-        else if(token == '"')//string literal constant
+        else if (token == '"') //string literal constant
         {
             int cnt = 0;
-            while( (token = *(src++)) != '"' && cnt < 63)//max string length is 63
+            while ((token = *(src++)) != '"' && cnt < 63) //max string length is 63
             {
-                if(token == '\\')
+                if (token == '\\')
                 {
-                    if(*src == 'n')
+                    if (*src == 'n')
                         token_str_val[cnt++] = '\n';
-                    else if(*src == 't')
+                    else if (*src == 't')
                         token_str_val[cnt++] = '\t';
-                    else if(*src == 'r')
+                    else if (*src == 'r')
                         token_str_val[cnt++] = '\r';
                     ++src;
                 }
@@ -77,7 +83,7 @@ void next()
                     token_str_val[cnt++] = token;
             }
             token_str_val[cnt] = '\0';
-            if(cnt == 63 && token != '"')
+            if (cnt == 63 && token != '"')
             {
                 cout << "string length out of range 64, in line " << lineno << endl;
                 exit(1);
@@ -86,45 +92,45 @@ void next()
             return;
         }
 
-        else if (token == '/')//comment or divide
+        else if (token == '/') //comment or divide
         {
-            if(*src == '/')//skip comments
-            while(*src != '\n' && *src != 0)
-                ++src;
+            if (*src == '/') //skip comments
+                while (*src != '\n' && *src != 0)
+                    ++src;
             else
             {
                 token = Div;
-                return ;
+                return;
             }
         }
 
-        else if (token == '=')// = or ==
+        else if (token == '=') // = or ==
         {
-            if(*src == '=')//skip comments
+            if (*src == '=') //skip comments
             {
                 token = Eq;
                 ++src;
             }
             else
                 token = Assign;
-            return ;
+            return;
         }
 
-        else if (token == '+')// + or ++
+        else if (token == '+') // + or ++
         {
-            if(*src == '+')
+            if (*src == '+')
             {
                 token = Inc;
                 ++src;
             }
             else
                 token = Add;
-            return ;
+            return;
         }
 
-        else if(token == '-')// - or --
+        else if (token == '-') // - or --
         {
-            if(*src == '-')
+            if (*src == '-')
             {
                 token = Dec;
                 ++src;
@@ -134,9 +140,9 @@ void next()
             return;
         }
 
-        else if(token == '!') // !=
+        else if (token == '!') // !=
         {
-            if (*src == '=') 
+            if (*src == '=')
             {
                 token = Ne;
                 ++src;
@@ -144,65 +150,65 @@ void next()
             return;
         }
 
-        else if(token == '<')  // <  or <= or <<
+        else if (token == '<') // <  or <= or <<
         {
-            if (*src == '=') 
+            if (*src == '=')
             {
                 token = Le;
                 ++src;
-            } 
-            else if (*src == '<') 
+            }
+            else if (*src == '<')
             {
                 token = Shl;
                 ++src;
-            } 
-            else 
+            }
+            else
                 token = Lt;
             return;
         }
 
-        else if(token == '>')  // >  or >= or >>
+        else if (token == '>') // >  or >= or >>
         {
-            if (*src == '=') 
+            if (*src == '=')
             {
                 token = Ge;
                 ++src;
-            } 
-            else if (*src == '>') 
+            }
+            else if (*src == '>')
             {
                 token = Shr;
                 ++src;
-            } 
-            else 
+            }
+            else
                 token = Gt;
             return;
         }
 
         else if (token == '|') // |  or ||
         {
-            if (*src == '|') 
+            if (*src == '|')
             {
                 token = Lor;
                 ++src;
-            } 
-            else 
+            }
+            else
                 token = Or;
             return;
         }
 
         else if (token == '&') //& or &&
         {
-            if (*src == '&') 
+            if (*src == '&')
             {
                 token = Lan;
                 ++src;
-            } 
+            }
             else
                 token = And;
             return;
         }
 
-        else if (token == '^') 
+        else if (token == '^')
         {
             token = Xor;
             return;
@@ -214,7 +220,7 @@ void next()
             return;
         }
 
-        else if (token == '*') 
+        else if (token == '*')
         {
             token = Mul;
             return;
@@ -222,7 +228,7 @@ void next()
 
         else if (isalpha(token) || (token == '_')) // in case of an id
         {
-            // get Hash of the id, and store the string ptr in last
+            // get Hash of the id, and store the id name in temp
             Hash = token;
             int index = 0;
             char temp[64];
@@ -231,62 +237,89 @@ void next()
             {
                 Hash = Hash * 147 + *(src++);
                 temp[index++] = token;
-                if(index > 63)
+                if (index > 63)
                 {
-                    cout << "identifier out of range(64) in line " 
-                        << lineno << endl;
+                    cout << "identifier out of range(64-bits) in line "
+                         << lineno << endl;
                     exit(1);
                 }
             }
             temp[index] = '\0';
-            if(symtab.find(Hash) == symtab.end())//no duplicate
+            token = Id;
+
+            //return reserve words
+            int j = Char;
+            for (int i = 0; i < 9; i++, j++)
             {
-                strcpy(symtab[Hash].Name, temp);
-                symtab[Hash].Token = token = Id; //mark the token as an id
-                symtab[Hash].info.push_back(id_info(decl_type, layer, 0, 0));
-                //default value attribute is 0
+                if (strcmp(temp, reserve[i]) == 0)
+                    token = j;
             }
-            else//duplicate id name
+            if (token != Id)
+                return;
+
+            if (is_decl) //in declaration sentence
             {
-                if(symtab[Hash].info.back().Layer >= layer)
+                if (symtab.back().find(Hash) != symtab.back().end()) //already in symtab
                 {
-                    cout << "duplicate definition of identifier in line " 
-                        << lineno << endl;
+                    cout << "identifier definition duplicate in line "
+                         << lineno << endl;
                     exit(1);
                 }
                 else
-                    symtab[Hash].info.push_back(id_info(decl_type, layer, 0, 0));
+                {
+                    strcpy(symtab.back()[Hash].Name, temp);
+                    symtab.back()[Hash].Token = token = Id; //mark the token as an id
+                    symtab.back()[Hash].Type = decl_type;   //inherit type
+                    symtab.back()[Hash].In_value = 0;
+                    symtab.back()[Hash].D_value = 0;
+                    //default value is 0
+                    //not sure it's a function or variable, dealing in syntax part
+                }
+            }
+            else
+            {
+                int len = symtab.size();
+                while (len--)
+                {
+                    if (symtab[len].find(Hash) != symtab[len].end())
+                        break;
+                }
+                if (len == -1)
+                {
+                    cout << "unknown identifier in line "
+                         << lineno << endl;
+                    exit(1);
+                }
             }
             return;
         }
 
-        else if (isdigit(token))//in case of  positive int or double
+        else if (isdigit(token)) //in case of  positive int or double
         {
-            token_in_val = token-'0';
-            while(isdigit(token = *(src++)))
-                token_in_val = token_in_val*10 + token-'0';
+            token_in_val = token - '0';
+            while (isdigit(token = *(src++)))
+                token_in_val = token_in_val * 10 + token - '0';
             token = Con_Int;
-            if(token == '.')
+            if (token == '.')
             {
                 double dot = 0.1;
                 token_d_val = token_in_val;
-                while(isdigit(token = *(src++)))
+                while (isdigit(token = *(src++)))
                 {
-                    token_d_val += dot*(token-'0');
+                    token_d_val += dot * (token - '0');
                     dot /= 10;
-                }    
+                }
                 token = Con_Double;
             }
             return;
         }
 
-        else if(token == '[' || token == ']' || token == '?' || token == '~' || token == '(' || token == ')'
-                    || token == ';' || token == '{' || token == '}' || token == ':')
+        else if (token == '[' || token == ']' || token == '?' || token == '~' || token == '(' || token == ')' || token == ';' || token == '{' || token == '}' || token == ':')
             return;
 
-        else if(!isspace(token))//illegal charactor
+        else //illegal charactor
         {
-            cout << "illegal charactor in line "<< lineno << endl;
+            cout << "illegal charactor in line " << lineno << endl;
             exit(1);
         }
     }
