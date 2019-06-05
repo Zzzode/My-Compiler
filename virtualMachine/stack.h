@@ -1,17 +1,17 @@
 #ifndef __STACK_H__
 #define __STACK_H__
 
-typedef struct Node
-{ // 节点
+typedef struct Node // 节点
+{ 
     int data;
     struct Node *pNext;
 } * PNODE, NODE;
 
-typedef struct Stack
-{ // 栈
+typedef struct Stack // 栈
+{ 
     PNODE pTop;
     PNODE pBottom;
-} STACK, *PSTACK;
+} V_STACK, *PSTACK;
 
 // 栈的初始化
 void stackInit(PSTACK);

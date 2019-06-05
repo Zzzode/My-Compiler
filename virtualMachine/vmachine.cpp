@@ -8,8 +8,7 @@
 #include <string.h>
 #include <memory.h>
 #include <unistd.h>
-
-#include "VM.h"
+#include "vmachine.h"
 
 int main(int argc, char **argv)
 {
@@ -36,32 +35,10 @@ void initVirtulMachine()
     poolsize = 256 * 1024; // 默认内存区域大小为256*1024
 
     // 给虚拟机分配空间
-    if (!(CODE = malloc(poolsize)))
-    {
-        printf("could not malloc(%d) for code area\n", poolsize);
-        exit(1);
-    }
-    if (!(DATA = malloc(poolsize)))
-    {
-        printf("could not malloc(%d) for data area\n", poolsize);
-        exit(1);
-    }
-    if (!(STACK = malloc(poolsize)))
-    {
-        printf("could not malloc(%d) for stack area\n", poolsize);
-        exit(1);
-    }
-    if (!(symbols = malloc(poolsize)))
-    {
-        printf("could not malloc(%d) for symbol table\n", poolsize);
-        exit(1);
-    }
+    stackInit(&CODE);      // 初始化CODE，用于存放汇编代码
+    stackInit(&DATA);      // 初始化DATA，用于存放初始化过的数据
+    stackInit(&STACK);     // 初始化STACK， 用于处理函数调用相关数据
 
-    memset(CODE, 0, poolsize);
-    memset(DATA, 0, poolsize);
-    memset(STACK, 0, poolsize);
-    memset(symbols, 0, poolsize);
-
-    BP = SP = (int *)((int)STACK + poolsize);
+    BP = SP = (int *)(int)STACK;
     ax = 0;
 }

@@ -124,7 +124,7 @@ void stackTraverse(PSTACK pS)
 // 测试用，测试完注释掉
 /* int main(void)
 {
-    STACK stack;  // 声明一个栈
+    V_STACK stack;  // 声明一个栈
     stackInit(&stack); // 初始化
 
     // 压栈
