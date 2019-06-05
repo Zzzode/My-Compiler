@@ -10,14 +10,14 @@ int baseType, exprType;            // 声明类型以及表达式类型
 int index_of_bp;                   // 栈bp指针的index
 int *CODE, *STATIC, *HEAP, *STACK; // 四大内存区域
 int *PC, *BP, *SP, AX, cycle;      // 寄存器
-int *current_Id, *Symbols;         // ID和符号表
+int *current_Id, *symbols;         // ID和符号表
 int *ID_MAIN;                      // main函数
 
 char *src, *oldsrc;                // 指向代码字符串的指针
 char *DATA;                        // 数据段
 
 // 基础汇编指令集
-enum Instructions{
+enum instructions_e{
     LEA, IMM, JMP, CALL, JZ, JNZ, ENT,
     ADJ, LEV, LI,  LC,   SI, SC,  PUSH, 
     OR,  XOR, AND, EQ,   NE, LT,  GT, LE, GE,
@@ -27,7 +27,7 @@ enum Instructions{
 };
 
 // tokens and classes (operators last and in precedence order)
-enum Tokens{
+enum tokens_e{
     Num = 128,
     Fun,  Sys,  Glo,  Loc, Id, 
     Char, Else, Enum, If,  Int, Return, Sizeof, While, 
@@ -36,13 +36,13 @@ enum Tokens{
 };
 
 // fields of identifier
-enum Identifier{
+enum identifier_e{
     Token, Hash,  Name,   Type,   Class,
     Value, BType, BClass, BValue, IdSize
 };
 
 // types of variable/function
-enum Variable_Types{
+enum variableTypes_e{
     CHAR, INT, PTR
 };
 
