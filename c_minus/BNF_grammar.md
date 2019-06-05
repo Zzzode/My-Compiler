@@ -1,5 +1,8 @@
-//here are BNF for our c_minus language
+# BNF Grammer
 
+>here are BNF for our c_minus language
+
+```
 program : {glo_decl}+
 glo_decl : enum_decl | var_decl | func_decl
 enum_decl : 'enum' id '{' id '=''num' {',' id '=''num'} '}'
@@ -28,11 +31,12 @@ system function: {"open", "read", "close", "printf",
 operator:   /, =, ==, +, ++, -, --, !, !=, 
             <, <=, <<, >, >=, >>, |, ||, 
             &, &&, ^, %, *, and, or, not
+```
 
-notice:
-support multi-pointer(int***)
-support nest definition
-support assignment while definition
-support definition in statement
-identifier start with [_ | digit | alpha]
-funciton and its full definition must be put ahead of the caller
+**notice:**  
+- support multi-pointer(int***)
+- support nest definition
+- support assignment while definition
+- support definition in statement
+- identifier start with [_ | digit | alpha]
+- funciton and its full definition must be put ahead of the caller
