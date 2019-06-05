@@ -1,7 +1,7 @@
+# Simple C Compiler
+
 ![Author](https://img.shields.io/badge/Author-zxhcho-blue.svg?style=flat)
 ![Author](https://img.shields.io/badge/Author-Zzzcode-blue.svg?style=flat)
-
-# Simple C Compiler
 
 <!-- TOC -->
 - [Simple C Compiler](#simple-c-compiler)
