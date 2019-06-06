@@ -144,7 +144,7 @@ void next()
             return;
         }
 
-        else if (token == '!') // != or !
+        else if (token == '!') // .   != or !
         {
             if (*src == '=')
             {

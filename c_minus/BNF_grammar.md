@@ -6,7 +6,7 @@
 program : {glo_decl}+
 glo_decl : enum_decl | var_decl | func_decl
 enum_decl : 'enum' id '{' id '=''num' {',' id '=''num'} '}'
-var_decl : type {'*'} id {'=' num}{ ',' id {'=' num}} ';'
+var_decl : type {'*'} id {'[' num ']'} {'=' num} { ',' id {'[' num ']'}{'=' num}} ';'
 //Assign is allowed in var_decl
 //ptr is default as NULL
 //different from class-c every id's type is in the head

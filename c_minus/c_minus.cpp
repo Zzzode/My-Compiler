@@ -3,7 +3,6 @@
 #include <unistd.h>
 #include <vector>
 #include <unordered_map>
-#include <vector>
 #include "c_minus.h"
 using namespace std;
 
@@ -65,6 +64,8 @@ void open_src()
     }
     src[n] = '\0';//add EOF
     close(fd);
+
+    //TODO check buffer malloc, change to windows API
 }
 
 void init_symtab() //put build-in function into symtab
@@ -78,8 +79,8 @@ void init_symtab() //put build-in function into symtab
         symtab[0][hash].In_value = j++; //build-in function type
         strcpy(symtab[0][hash].Name, temp[i]);
     }
-
-    //not sure how to handle "void" and "main"
+    //TODO"void" and "main"
+    //TODO add system function source
 }
 
 int main(int argc, char **argv)
@@ -89,4 +90,5 @@ int main(int argc, char **argv)
     open_src();
     init_symtab();
     program();
+    //TODO initiate stack and code area
 }

@@ -123,6 +123,28 @@ void glo_decl()
                 exit(1);
             }
         }
+        else if (token == '[')
+        {
+            int temp = Hash; //store the last id
+            match('[');
+            symtab[0][Hash].Type += PTR;
+            if (token == Con_Int)
+            {
+                match(Con_Int);
+                symtab[0][Hash].len = token_in_val; //mark array size
+            }
+            else if (token == Id)
+            {
+                if (symtab[0][Hash].Type != Int || symtab[0][Hash].In_value == 0)
+                {
+                    cout << "array size erro! in line " << lineno << endl;
+                    exit(1);
+                }
+                match(Id);
+                symtab[0][temp].len = symtab[0][Hash].In_value;
+            }
+            match(']');
+        }
         while (token != ';')
         {
             match(',');
@@ -152,6 +174,28 @@ void glo_decl()
                          << lineno << endl;
                     exit(1);
                 }
+            }
+            else if (token == '[')
+            {
+                int temp = Hash;//store the last id
+                match('[');
+                symtab[0][Hash].Type += PTR;
+                if(token == Con_Int)
+                {
+                    match(Con_Int);
+                    symtab[0][Hash].len = token_in_val; //mark array size
+                }
+                else if(token == Id)
+                {
+                    if (symtab[0][Hash].Type != Int || symtab[0][Hash].In_value == 0)
+                    {
+                        cout << "array size erro! in line " << lineno << endl;
+                        exit(1);
+                    }
+                    match(Id);
+                    symtab[0][temp].len = symtab[0][Hash].In_value;
+                }
+                match(']');
             }
         }
         match(';');
@@ -185,6 +229,7 @@ void enum_decl()
 }
 
 //var_decl : type {'*'} id {'=' num}{ ',' id {'=' num}} ';'
+//TODO add variable to stack
 void var_decl()
 {
     decl_type = token;
@@ -220,6 +265,28 @@ void var_decl()
             exit(1);
         }
     }
+    else if (token == '[')
+    {
+        int temp = Hash; //store the last id
+        match('[');
+        symtab.back()[Hash].Type += PTR;
+        if (token == Con_Int)
+        {
+            match(Con_Int);
+            symtab.back()[Hash].len = token_in_val; //mark array size
+        }
+        else if (token == Id)
+        {
+            if (symtab.back()[Hash].Type != Int || symtab.back()[Hash].In_value == 0)
+            {
+                cout << "array size erro! in line " << lineno << endl;
+                exit(1);
+            }
+            match(Id);
+            symtab.back()[temp].len = symtab.back()[Hash].In_value;
+        }
+        match(']');
+    }
     while (token != ';')
     {
         match(',');
@@ -250,12 +317,35 @@ void var_decl()
                 exit(1);
             }
         }
+        else if (token == '[')
+        {
+            int temp = Hash; //store the last id
+            match('[');
+            symtab.back()[Hash].Type += PTR;
+            if (token == Con_Int)
+            {
+                match(Con_Int);
+                symtab.back()[Hash].len = token_in_val; //mark array size
+            }
+            else if (token == Id)
+            {
+                if (symtab.back()[Hash].Type != Int || symtab.back()[Hash].In_value == 0)
+                {
+                    cout << "array size erro! in line " << lineno << endl;
+                    exit(1);
+                }
+                match(Id);
+                symtab.back()[temp].len = symtab.back()[Hash].In_value;
+            }
+            match(']');
+        }
     }
     match(';');
 }
 
 //func_para : type {'*'} id {',' type {'*'} id}
-//add parameters into function
+//TODO add parameters to function stack
+//TODO add pass like int a[]
 void func_para()
 {
     if (token == Int)
@@ -303,6 +393,7 @@ void func_para()
 }
 
 //func_body : {var_decl} {stmt}
+//TODO add function body to code area
 void func_body()
 {
     if (token == '{') //enter a nest scope
