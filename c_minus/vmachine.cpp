@@ -1,6 +1,6 @@
-/** 
+/**
  * @Author: Zzzcode
- * @Date: 2019-05-27 18:08:48 
+ * @Date: 2019-05-27 18:08:48
  * @Desc: 汇编代码虚拟机，实现并运行汇编代码
  */
 #include <stdio.h>
@@ -8,6 +8,9 @@
 #include <string.h>
 #include <memory.h>
 #include <unistd.h>
+#include <fcntl.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 #include "vmachine.h"
 
 int main(int argc, char **argv)
@@ -23,11 +26,11 @@ int main(int argc, char **argv)
         return -1;
     }
 
-    initVirtulMachine() ；
+    initVirtulMachine();
 }
 
-/** 
- * @Author: Zzzcode 
+/**
+ * @Author: Zzzcode
  * @Desc:  虚拟机内存空间初始化
  */
 void initVirtulMachine()
@@ -40,5 +43,5 @@ void initVirtulMachine()
     stackInit(&STACK);     // 初始化STACK， 用于处理函数调用相关数据
 
     BP = SP = (int *)(int)STACK;
-    ax = 0;
+    AX = 0;
 }

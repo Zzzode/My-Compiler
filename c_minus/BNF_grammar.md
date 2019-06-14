@@ -16,24 +16,24 @@ func_para : type {'*'} id {',' type {'*'} id}
 func_body : {var_decl} {stmt}
 
 stmt : empty_stmt | no_empty_stmt
-no_empty_stmt : if_stmt | while_stmt 
-|'{' stmt '}' | 'return' exp ';'| exp ';' | decl_stmt
+no_empty_stmt : if_stmt | while_stmt
+                | '{' stmt '}' | 'return' exp ';' | exp ';' | decl_stmt
 //declaration in stmt is allowed
 
 if_stmt : 'if' '(' exp ')' stmt {else no_empty_stmt}
 while_stmt : 'while' '(' exp ')' no_empty_stmt
 
-reserve words:{"char", "int", "double", "else", "enum", "if", 
+reserve words:{"char", "int", "double", "else", "enum", "if",
                 "return", "sizeof", "while", "and", "or", "not"};
 system function: {"open", "read", "close", "printf",
                 "malloc", "memset", "memcmp", "exit"};
 
-operator:   /, =, ==, +, ++, -, --, !, !=, 
-            <, <=, <<, >, >=, >>, |, ||, 
+operator:   /, =, ==, +, ++, -, --, !, !=,
+            <, <=, <<, >, >=, >>, |, ||,
             &, &&, ^, %, *, and, or, not
 ```
 
-**notice:**  
+**notice:**
 - support multi-pointer(int***)
 - support nest definition
 - support assignment while definition

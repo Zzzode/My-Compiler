@@ -17,7 +17,7 @@ extern int token_in_val;
 extern double token_d_val;
 extern char token_str_val[64];
 extern vector<unordered_map<int, ID>> symtab;
-extern char **reserve;
+extern char *reserve[12];
 extern char *src;
 
 void next()
@@ -37,7 +37,7 @@ void next()
         }
 
         // char literal constant ,we only support the escape of \n, \t, \r, '\\'
-        else if (token == '\'')
+        else if (token == '\'') // TODO ! '\''?
         {
             token = Con_Char;
             token_in_val = *(src++);  //store char as int type
@@ -68,7 +68,7 @@ void next()
 
         else if (token == '"') //string literal constant
         {
-            int cnt = 0;
+            int cnt = 0; // max string length
             while ((token = *(src++)) != '"' && cnt < 63) //max string layergth is 63
             {
                 if (token == '\\')
@@ -233,8 +233,7 @@ void next()
         }
 
         else if (isalpha(token) || (token == '_')) // in case of an id
-        {
-            // get Hash of the id, and store the id name in temp
+        {   // get Hash of the id, and store the id name in temp
             Hash = token;
             int index = 0;
             char temp[64];

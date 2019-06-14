@@ -1,4 +1,5 @@
 #include <iostream>
+#include <stdlib.h>
 #include <unordered_map>
 #include <vector>
 #include "c_minus.h"
@@ -12,8 +13,9 @@ extern bool is_decl;
 extern int token_in_val;
 extern double token_d_val;
 extern vector<unordered_map<int, ID>> symtab;
-extern char **reserve;
+extern char *reserve[12];
 
+// match this character then go next
 void match(int tk)
 {
     if (token == tk)
@@ -229,7 +231,7 @@ void enum_decl()
 }
 
 //var_decl : type {'*'} id {'=' num}{ ',' id {'=' num}} ';'
-//TODO add variable to stack
+//TODO: add variable to stack
 void var_decl()
 {
     decl_type = token;
@@ -433,7 +435,7 @@ void stmt()
     {
         match(If);
         match('(');
-        exp(); //control sentence
+        exp(Assign); //control sentence
         match(')');
         stmt(); //in case of true
         if (token == Else)
@@ -446,7 +448,7 @@ void stmt()
     {
         match(While);
         match('(');
-        exp();
+        exp(Assign);
         match(')');
         stmt();
     }
@@ -463,7 +465,7 @@ void stmt()
     {
         match(Return);
         if (token != ';')
-            exp();
+            exp(Assign);
         match(';');
     }
     else if (token == ';') //empty stmt
@@ -478,7 +480,7 @@ void stmt()
     }
     else //expression
     {
-        exp();
+        exp(Assign);
         match(';');
     }
 }
