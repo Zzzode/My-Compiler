@@ -53,7 +53,7 @@ void open_src(int fd, char **argv)
     //TODO check buffer malloc, change to windows API
 }
 
-void init_symtab(int fd) //put build-in function into symtab
+void init_symtab(int fd, char **argv) //put build-in function into symtab
 {
     int i;
     /* int i = Char;
@@ -79,19 +79,19 @@ void init_symtab(int fd) //put build-in function into symtab
     if ((fd = open(*argv, 0)) < 0)
     {
         printf("could not open(%s)\n", *argv);
-        return -1;
+        exit(1);
     }
 
-    if (!(src = old_src = malloc(poolsize)))
+    if (!(src = oldsrc = (char*)malloc(poolsize)))
     {
         printf("could not malloc(%d) for source area\n", poolsize);
-        return -1;
+        exit(1);
     }
     // read the source file
     if ((i = read(fd, src, poolsize - 1)) <= 0)
     {
         printf("read() returned %d\n", i);
-        return -1;
+        exit(1);
     }
     src[i] = 0; // add EOF character
     close(fd);
@@ -107,12 +107,12 @@ int main(int argc, char **argv)
 
     open_src(fd, argv);
     initVirtulMachine();
-    init_symtab(fd);
+    init_symtab(fd, argv);
 
     program();
 
     // 如果没有main()函数
-    if (!(pc = (int *)idmain[Value]))
+    if (!(PC = (int *)ID_MAIN[Value]))
     {
         cout << "main() not defined" << endl;
         exit(1);

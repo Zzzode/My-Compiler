@@ -5,6 +5,8 @@
 // #define int long long // 修改int长度为64位，用于存放地址
 
 // int token, token_val;              // 当前token和token值
+int debug;                         // print the executed instructions
+int assembly;                      // print out the assembly and source
 int poolsize;                      // 内存区域大小
 int line;                          // 行号
 
@@ -52,4 +54,7 @@ enum identifier_e{
     CHAR, INT, PTR
 };
  */
+
+void initVirtulMachine();
+
 #endif // ! _VMACHINE_H_
