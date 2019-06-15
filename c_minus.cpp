@@ -119,13 +119,13 @@ int main(int argc, char **argv)
         exit(1);
     }
     // 初始化虚拟机的栈，当 main 函数结束时退出进程
-    SP = (int *)((int)stack + poolsize);
+    SP = (int *)((int)(stack) + poolsize);
     *--SP = EXIT; // call exit if main returns
     *--SP = PUSH;
     temp = SP;
     *--SP = argc;
-    *--SP = (int)argv;
-    *--SP = (int)temp;
+    *--SP = reinterpret_cast<int>(argv);
+    *--SP = reinterpret_cast<int>(temp);
 
     return eval();
 }

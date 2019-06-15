@@ -42,55 +42,7 @@ D:/OneDrive/workspace/Visual Studio/My Compiler/c_minus.h
 vmachine.h
 D:/OneDrive/workspace/Visual Studio/My Compiler/vmachine.h
 
-D:/OneDrive/workspace/Visual Studio/My Compiler/get_token.cpp
-iostream
--
-string.h
--
-cctype
--
-vector
--
-unordered_map
--
-c_minus.h
-D:/OneDrive/workspace/Visual Studio/My Compiler/c_minus.h
-
 D:/OneDrive/workspace/Visual Studio/My Compiler/stack.h
-
-D:/OneDrive/workspace/Visual Studio/My Compiler/syntax.cpp
-iostream
--
-stdlib.h
--
-unordered_map
--
-vector
--
-c_minus.h
-D:/OneDrive/workspace/Visual Studio/My Compiler/c_minus.h
-
-D:/OneDrive/workspace/Visual Studio/My Compiler/vmachine.cpp
-iostream
--
-stdio.h
--
-stdlib.h
--
-string.h
--
-memory.h
--
-unistd.h
--
-fcntl.h
--
-sys/types.h
--
-sys/stat.h
--
-vmachine.h
-D:/OneDrive/workspace/Visual Studio/My Compiler/vmachine.h
 
 D:/OneDrive/workspace/Visual Studio/My Compiler/vmachine.h
 stack.h
