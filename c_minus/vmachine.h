@@ -9,11 +9,13 @@ int poolsize;                      // 内存区域大小
 int line;                          // 行号
 
 int index_of_bp;                   // 栈bp指针的index
+
 V_STACK CODE, STATIC, HEAP, STACK; // 四大内存区域
 
 int *text,                         // text segment
     *old_text,                     // for dump text segment
     *stack;                        // stack
+
 char *data;                        // data segment
 
 int *PC, *BP, *SP, AX, cycle;      // 寄存器

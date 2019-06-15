@@ -21,7 +21,7 @@ double token_d_val = 0; //literal double value
 //notice we onlt deal with dec value
 
 char token_str_val[64]; //store literal constant of string
-char *src;              //buffer of file input
+// char *src;              //buffer of file input
 
 char *reserve[12] = {"char", "int", "double", "else", "enum", "if",
                      "return", "sizeof", "while", "and", "or", "not"};
@@ -79,7 +79,7 @@ void enum_decl();
 void var_decl();
 
 //func_decl : type {'*'} id '(' func_para ')' '{' func_body '}'
-void func_decl();
+// void func_decl();
 
 //func_para : type {'*'} id {',' type {'*'} id}
 void func_para();
