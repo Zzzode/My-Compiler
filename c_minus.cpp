@@ -112,6 +112,7 @@ int main(int argc, char **argv)
     program();
 
     // 如果没有main()函数
+    // TODO: main()?
     if (!(PC = (int *)ID_MAIN[Value]))
     {
         cout << "main() not defined" << endl;
@@ -124,7 +125,7 @@ int main(int argc, char **argv)
     temp = SP;
     *--SP = argc;
     *--SP = (int)argv;
-    *--SP = (int)tmp;
+    *--SP = (int)temp;
 
     return eval();
 }

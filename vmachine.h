@@ -44,10 +44,10 @@ enum instructions_e{
 }; */
 
 // fields of identifier
-enum identifier_e{
+/*enum identifier_e{
     Token, Hash,  Name,   Type,   Class,
     Value, BType, BClass, BValue, IdSize
-};
+};*/
 
 // types of variable/function
 /* enum variableTypes_e{
@@ -56,5 +56,6 @@ enum identifier_e{
  */
 
 void initVirtulMachine();
+int eval();
 
 #endif // ! _VMACHINE_H_
