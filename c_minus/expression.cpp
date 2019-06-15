@@ -336,28 +336,28 @@ void exp(int level)
                 exp_type = temp;
                 *++text = (exp_type == CHAR) ? SC : SI;
             }
-            /* else if (token == Cond)
-            {
-                // expr ? a : b;
-                match(Cond);
-                *++text = JZ;
-                addr = ++text;
-                exp(Assign);
-                if (token == ':')
-                {
-                    match(':');
-                }
-                else
-                {
-                    cout << "missing colon in conditional " << line << endl;
-                    exit(-1);
-                }
-                *addr = (int)(text + 3);
-                *++text = JMP;
-                addr = ++text;
-                exp(Cond);
-                *addr = (int)(text + 1);
-            } */
+            // else if (token == Cond)
+            // {
+            //     // expr ? a : b;
+            //     match(Cond);
+            //     *++text = JZ;
+            //     addr = ++text;
+            //     exp(Assign);
+            //     if (token == ':')
+            //     {
+            //         match(':');
+            //     }
+            //     else
+            //     {
+            //         cout << "missing colon in conditional " << line << endl;
+            //         exit(-1);
+            //     }
+            //     *addr = (int)(text + 3);
+            //     *++text = JMP;
+            //     addr = ++text;
+            //     exp(Cond);
+            //     *addr = (int)(text + 1);
+            // }
             else if (token == Lor)
             {
                 // logic or
