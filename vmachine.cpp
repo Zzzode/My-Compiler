@@ -3,7 +3,6 @@
  * @Date: 2019-05-27 18:08:48
  * @Desc: 汇编代码虚拟机，实现并运行汇编代码
  */
-#include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -13,8 +12,6 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include "vmachine.h"
-
-using namespace std;
 
 /**
  * @Author: Zzzcode
@@ -26,24 +23,20 @@ void initVirtulMachine()
 
     // allocate memory for virtual machine
     // 给虚拟机分配空间
-    if (!(text = old_text = (int *)malloc(poolsize)))
-    {
-        cout << "could not malloc " << poolsize << "for text area" << endl;
+    if (!(text = malloc(poolsize))) {
+        printf("could not malloc(%d) for text area\n", poolsize);
         exit(1);
     }
-    if (!(data = (char *)malloc(poolsize)))
-    {
-        cout << "could not malloc " << poolsize << "for data area" << endl;
+    if (!(data = malloc(poolsize))) {
+        printf("could not malloc(%d) for data area\n", poolsize);
         exit(1);
     }
-    if (!(stack = (int *)malloc(poolsize)))
-    {
-        cout << "could not malloc " << poolsize << "for stack area" << endl;
+    if (!(stack = malloc(poolsize))) {
+        printf("could not malloc(%d) for stack area\n", poolsize);
         exit(1);
     }
-    if (!(symbols = (int *)malloc(poolsize)))
-    {
-        cout << "could not malloc " << poolsize << "for symbol table" << endl;
+    if (!(symbols = malloc(poolsize))) {
+        printf("could not malloc(%d) for symbol table\n", poolsize);
         exit(1);
     }
 
@@ -51,6 +44,9 @@ void initVirtulMachine()
     memset(data, 0, poolsize);
     memset(stack, 0, poolsize);
     memset(symbols, 0, poolsize);
+
+    old_text = text;
+
     BP = SP = (int *)((int* )stack + poolsize);
     AX = 0;
 
@@ -110,7 +106,10 @@ int eval() {
         else if (op == DIV) AX = *SP++ / AX;
         else if (op == MOD) AX = *SP++ % AX;
 
-        else if (op == EXIT) { printf("exit(%d)", *SP); return *SP;}
+        else if (op == EXIT) {
+            printf("exit(%d)", *SP);
+            return *SP;
+        }
         else if (op == OPEN) { AX = open((char *)SP[1], SP[0]); }
         else if (op == CLOS) { AX = close(*SP);}
         else if (op == READ) { AX = read(SP[2], (char *)SP[1], *SP); }
