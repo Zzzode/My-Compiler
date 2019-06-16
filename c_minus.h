@@ -27,7 +27,7 @@ enum { CHAR, INT, DOUBLE, PTR };
 
 // infos of an identifier
 struct ID{
-    int TOKEN;
+    // int TOKEN;
     int Class;            //function or variable
     int Type;             //type of variable, for function is INT
     int* addr;

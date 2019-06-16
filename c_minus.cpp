@@ -46,6 +46,8 @@ char *sys[8] = {"open", "read", "close", "printf",
  * pop back when leave a local area
  */
 vector<unordered_map<int, ID>> symtab(1);
+unordered_map<int, int*> func_inst; // + fun_para
+unordered_map<int, int*> func_var; // + fun_var
 // vector<unordered_map<int, ID>> ID_MAIN;
 
 //calculat the hash value of an id

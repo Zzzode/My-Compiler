@@ -19,13 +19,13 @@ using namespace std;
 int debug;                         // print the executed instructions
 int assembly;                      // print out the assembly and source
 int poolsize;                      // 内存区域大小
-// int line;                          // 行号
+// int line;                       // 行号
 
 int index_of_bp;                   // 栈bp指针的index
 
 int *text,                         // text segment
-        *old_text,                     // for dump text segment
-        *stack;                        // stack
+    *old_text,                     // for dump text segment
+    *stack;                        // stack
 
 char *data;                        // data segment
 

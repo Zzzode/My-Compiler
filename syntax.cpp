@@ -19,8 +19,9 @@ extern char *reserve[12];
 // match this character then go next
 void match(int tk)
 {
-    if (token == tk)
+    if (token == tk) {
         next();
+    }
     else
     {
         cout << tk << " unmatch in line " << lineno << endl;
@@ -352,7 +353,7 @@ void var_decl()
 void func_para()
 {
     if (token == Int)
-        match(INT);
+        match(Int);
     else if (token == Char)
         match(Char);
     else if (token == Double)

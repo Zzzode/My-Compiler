@@ -116,7 +116,7 @@ void exp(int level)
             exp_type = INT;
         }
         else if (token == Id)
-        //TODO 函数内的symtab[0][Hash]应该都改为symtab[layer][Hash]，词法分析会在match(id)时找到对应的layer
+        //TODO 调用函数栈，函数参数压栈。pc指向函数指令栈；函数活动记录
         { //function call or variable or enum constant(can't be assign again)
             match(Id);
             if (token == '(') //function call
@@ -137,37 +137,37 @@ void exp(int level)
                 }
                 match(')');
             }
-            else if (symtab[0][Hash].Type == Con_Int) //enum
+            else if (symtab[layer][Hash].Type == Con_Int) //enum
             { // TODO: Fix it
                 *++text = IMM;
-                *++text = symtab[0][Hash].In_value;
+                *++text = symtab[layer][Hash].In_value;
                 exp_type = INT;
             }
             else
             {
                 // variable
                 // TODO: 这里似乎没有分局部变量和全局变量？
-                if (symtab[0][Hash].Class == Var)
+                if (symtab[layer][Hash].Class == Var)
                 {
-                    if(symtab[0][Hash].Type != DOUBLE){
+                    if(symtab[layer][Hash].Type != DOUBLE){
                         *++text = LEA;
-                        *++text = index_of_bp - symtab[0][Hash].In_value;
+                        *++text = index_of_bp - symtab[layer][Hash].In_value;
                     }
-                    else if(symtab[0][Hash].Type == CHAR)
+                    else if(symtab[layer][Hash].Type == CHAR)
                     { // TODO: 这边有待商榷
                         *++text = LEA;
-                        *++text = index_of_bp - symtab[0][Hash].In_value;
+                        *++text = index_of_bp - symtab[layer][Hash].In_value;
                     }
                 }
-                else//TODO可以去掉，变量声明检查在词法程序里面已有
+                /*else//TODO可以去掉，变量声明检查在词法程序里面已有
                 {
                     printf("%d: undefined variable\n", lineno);
                     exit(-1);
-                }
+                }*/
 
                 // default behaviour is to load the value of the
                 // address which is stored in `ax`
-                exp_type = symtab[0][Hash].Type;
+                exp_type = symtab[layer][Hash].Type;
                 *++text = (exp_type == CHAR) ? LC : LI;
             }
         }

@@ -238,11 +238,13 @@ void next()
             Hash = token;
             int index = 0;
             char temp[64];
-            temp[index++] = token;
+            temp[index++] = token; // TODO: i, b missing
+            token = *src++;
             while (isalpha(token) || isdigit(token) || (token == '_'))
             {
-                Hash = Hash * 147 + *(src++);
+                Hash = Hash * 147 + token;
                 temp[index++] = token;
+                token = *src++;
                 if (index > 63)
                 {
                     cout << "identifier out of range(64-bits) in line "
@@ -251,6 +253,7 @@ void next()
                 }
             }
             temp[index] = '\0';
+            src--;
             token = Id;
 
             //return reserve words
@@ -305,8 +308,10 @@ void next()
             while (isdigit(token = *(src++)))
                 token_in_val = token_in_val * 10 + token - '0';
             token = Con_Int;
-            if (token == '.')
+            src--;
+            if (*src == '.')
             {
+                src++;
                 double dot = 0.1;
                 token_d_val = token_in_val;
                 while (isdigit(token = *(src++)))
@@ -315,6 +320,7 @@ void next()
                     dot /= 10;
                 }
                 token = Con_Double;
+                src--;
             }
             return;
         }
