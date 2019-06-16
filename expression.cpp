@@ -66,6 +66,7 @@ void exp(int level)
             //
             *++text = IMM;
             *++text = token_str_val[0]; // TODO: 是否已经转换成二进制？
+            //TODO 改成 token_in_val
         }
         else if (token == Sizeof) //sizeof(typename) or sizeof(variable)
         {
@@ -111,10 +112,12 @@ void exp(int level)
 
             *++text = IMM;
             *++text = (exp_type == CHAR) ? sizeof(char) : sizeof(int); // TODO: 如果是double？
+            //TODO char、int、double返回对应sizeof， 剩余均为指针类型
 
             exp_type = INT;
         }
         else if (token == Id)
+        //TODO 函数内的symtab[0][Hash]应该都改为symtab[layer][Hash]，词法分析会在match(id)时找到对应的layer
         { //function call or variable or enum constant(can't be assign again)
             match(Id);
             if (token == '(') //function call
@@ -157,7 +160,7 @@ void exp(int level)
                         *++text = index_of_bp - symtab[0][Hash].In_value;
                     }
                 }
-                else
+                else//TODO可以去掉，变量声明检查在词法程序里面已有
                 {
                     printf("%d: undefined variable\n", line);
                     exit(-1);
