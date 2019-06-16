@@ -2,30 +2,29 @@
 #define _VMACHINE_H_
 
 #include "stack.h"
-// #define int long long // 修改int长度为64位，用于存放地址
+// #define int long long              // 修改int长度为64位，用于存放地址
 
-// int token, token_val;              // 当前token和token值
-int debug;                         // print the executed instructions
-int assembly;                      // print out the assembly and source
-int poolsize;                      // 内存区域大小
-int line;                          // 行号
+extern int debug;                         // print the executed instructions
+extern int assembly;                      // print out the assembly and source
+extern int poolsize;                      // 内存区域大小
+// int line;                          // 行号
 
-int index_of_bp;                   // 栈bp指针的index
+extern int index_of_bp;                   // 栈bp指针的index
 
-V_STACK CODE, STATIC, HEAP, STACK; // 四大内存区域
+// V_STACK CODE, STATIC, HEAP, STACK; // 四大内存区域
 
-int *text,                         // text segment
-    *old_text,                     // for dump text segment
-    *stack;                        // stack
+extern int *text,                         // text segment
+        *old_text,                     // for dump text segment
+        *stack;                        // stack
 
-char *data;                        // data segment
+extern char *data;                        // data segment
 
-int *PC, *BP, *SP, AX, cycle;      // 寄存器
-int *current_Id, *symbols;         // ID和符号表
-int *ID_MAIN;                      // main函数
+extern int *PC, *BP, *SP, AX, cycle;      // 寄存器
+extern int *current_Id, *symbols;         // ID和符号表
+extern int *ID_MAIN;                      // main函数
 
-char *src, *oldsrc;                // 指向代码字符串的指针
-char *DATA;                        // 数据段
+extern char *src, *oldsrc;                // 指向代码字符串的指针
+extern char *DATA;                        // 数据段
 
 // 基础汇编指令集
 enum instructions_e{
@@ -56,6 +55,7 @@ enum instructions_e{
  */
 
 void initVirtulMachine();
+
 int eval();
 
 #endif // ! _VMACHINE_H_

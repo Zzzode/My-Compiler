@@ -3,6 +3,7 @@
 #include <unordered_map>
 #include <vector>
 #include "c_minus.h"
+#include "vmachine.h"
 using namespace std;
 
 extern int token;

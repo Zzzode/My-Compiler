@@ -4,6 +4,7 @@
 #include <vector>
 #include <unordered_map>
 #include "c_minus.h"
+#include "vmachine.h"
 using namespace std;
 //functions of lexical part
 

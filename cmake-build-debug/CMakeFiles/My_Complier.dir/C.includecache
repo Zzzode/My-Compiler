@@ -1,0 +1,34 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+D:/OneDrive/workspace/Visual Studio/My Compiler/stack.h
+
+D:/OneDrive/workspace/Visual Studio/My Compiler/vmachine.c
+stdio.h
+-
+stdlib.h
+-
+string.h
+-
+memory.h
+-
+unistd.h
+-
+fcntl.h
+-
+sys/types.h
+-
+sys/stat.h
+-
+vmachine.h
+D:/OneDrive/workspace/Visual Studio/My Compiler/vmachine.h
+
+D:/OneDrive/workspace/Visual Studio/My Compiler/vmachine.h
+stack.h
+D:/OneDrive/workspace/Visual Studio/My Compiler/stack.h
+

@@ -3,6 +3,7 @@
  * @Date: 2019-05-27 18:08:48
  * @Desc: 汇编代码虚拟机，实现并运行汇编代码
  */
+#include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -12,6 +13,28 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include "vmachine.h"
+
+using namespace std;
+
+int debug;                         // print the executed instructions
+int assembly;                      // print out the assembly and source
+int poolsize;                      // 内存区域大小
+// int line;                          // 行号
+
+int index_of_bp;                   // 栈bp指针的index
+
+int *text,                         // text segment
+        *old_text,                     // for dump text segment
+        *stack;                        // stack
+
+char *data;                        // data segment
+
+int *PC, *BP, *SP, AX, cycle;      // 寄存器
+int *current_Id, *symbols;         // ID和符号表
+int *ID_MAIN;                      // main函数
+
+char *src, *oldsrc;                // 指向代码字符串的指针
+char *DATA;                        // 数据段
 
 /**
  * @Author: Zzzcode
@@ -23,19 +46,19 @@ void initVirtulMachine()
 
     // allocate memory for virtual machine
     // 给虚拟机分配空间
-    if (!(text = malloc(poolsize))) {
+    if (!(text = (int*)malloc(poolsize))) {
         printf("could not malloc(%d) for text area\n", poolsize);
         exit(1);
     }
-    if (!(data = malloc(poolsize))) {
+    if (!(data = (char*)malloc(poolsize))) {
         printf("could not malloc(%d) for data area\n", poolsize);
         exit(1);
     }
-    if (!(stack = malloc(poolsize))) {
+    if (!(stack = (int*)malloc(poolsize))) {
         printf("could not malloc(%d) for stack area\n", poolsize);
         exit(1);
     }
-    if (!(symbols = malloc(poolsize))) {
+    if (!(symbols = (int*)malloc(poolsize))) {
         printf("could not malloc(%d) for symbol table\n", poolsize);
         exit(1);
     }
@@ -82,12 +105,12 @@ int eval() {
         else if (op == JMP)  {PC = (int *)*PC;}                                // jump to the address
         else if (op == JZ)   {PC = AX ? PC + 1 : (int *)*PC;}                   // jump if AX is zero
         else if (op == JNZ)  {PC = AX ? (int *)*PC : PC + 1;}                   // jump if AX is not zero
-        else if (op == CALL) {*--SP = (int)(PC+1); PC = (int *)*PC;}           // call subroutine
+        else if (op == CALL) {*--SP = (long long)(PC+1); PC = (int *)*PC;}           // call subroutine
             //else if (op == RET)  {PC = (int *)*SP++;}                              // return from subroutine;
-        else if (op == ENT)  {*--SP = (int)BP; BP = SP; SP = SP - *PC++;}      // make new stack frame
+        else if (op == ENT)  {*--SP = (long long)BP; BP = SP; SP = SP - *PC++;}      // make new stack frame
         else if (op == ADJ)  {SP = SP + *PC++;}                                // add eSP, <size>
         else if (op == LEV)  {SP = BP; BP = (int *)*SP++; PC = (int *)*SP++;}  // restore call frame and PC
-        else if (op == LEA)  {AX = (int)(BP + *PC++);}                         // load address for arguments.
+        else if (op == LEA)  {AX = (long long)(BP + *PC++);}                         // load address for arguments.
 
         else if (op == OR)  AX = *SP++ | AX;
         else if (op == XOR) AX = *SP++ ^ AX;
@@ -114,8 +137,8 @@ int eval() {
         else if (op == CLOS) { AX = close(*SP);}
         else if (op == READ) { AX = read(SP[2], (char *)SP[1], *SP); }
         else if (op == PRTF) { tmp = SP + PC[1]; AX = printf((char *)tmp[-1], tmp[-2], tmp[-3], tmp[-4], tmp[-5], tmp[-6]); }
-        else if (op == MALC) { AX = (int)malloc(*SP);}
-        else if (op == MSET) { AX = (int)memset((char *)SP[2], SP[1], *SP);}
+        else if (op == MALC) { AX = (long long)malloc(*SP);}
+        else if (op == MSET) { AX = (long long)memset((char *)SP[2], SP[1], *SP);}
         else if (op == MCMP) { AX = memcmp((char *)SP[2], (char *)SP[1], *SP);}
         else {
             printf("unknown instruction:%d\n", op);

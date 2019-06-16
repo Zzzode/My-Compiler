@@ -29,7 +29,7 @@ void exp(int level)
     {
         if (!token)
         {
-            cout << "unexpected token EOF of exp in line "
+            cout << "unexpected token EOF of exp in lineno "
                  << lineno << endl;
             exit(-1);
         }
@@ -57,7 +57,7 @@ void exp(int level)
             exp_type = Con_Str;
             //
             *++text = IMM;
-            *++text = ; // TODO: 需要把字符串转换成二进制
+            *++text = token_in_val; // TODO: 需要把字符串转换成二进制
         }
         else if (token == Con_Char)
         {
@@ -65,8 +65,7 @@ void exp(int level)
             exp_type = Con_Char;
             //
             *++text = IMM;
-            *++text = token_str_val[0]; // TODO: 是否已经转换成二进制？
-            //TODO 改成 token_in_val
+            *++text = token_in_val; //TODO 改成 token_in_val
         }
         else if (token == Sizeof) //sizeof(typename) or sizeof(variable)
         {
@@ -111,7 +110,7 @@ void exp(int level)
             match(')');
 
             *++text = IMM;
-            *++text = (exp_type == CHAR) ? sizeof(char) : sizeof(int); // TODO: 如果是double？
+            *++text = (exp_type == CHAR) ? sizeof(char) : sizeof(long long); // TODO: 如果是double？
             //TODO char、int、double返回对应sizeof， 剩余均为指针类型
 
             exp_type = INT;
@@ -162,7 +161,7 @@ void exp(int level)
                 }
                 else//TODO可以去掉，变量声明检查在词法程序里面已有
                 {
-                    printf("%d: undefined variable\n", line);
+                    printf("%d: undefined variable\n", lineno);
                     exit(-1);
                 }
 
@@ -204,7 +203,7 @@ void exp(int level)
                 exp_type -= PTR;
             else
             {
-                cout << "wrong reference to address in line "
+                cout << "wrong reference to address in lineno "
                      << lineno << endl;
                 exit(1);
             }
@@ -221,7 +220,7 @@ void exp(int level)
             }
             else
             {
-                cout << "bad address of " << line << endl;
+                cout << "bad address of " << lineno << endl;
                 exit(-1);
             }
             exp_type += PTR;
@@ -299,18 +298,18 @@ void exp(int level)
             }
             else
             {
-                printf("%d: bad lvalue of pre-increment\n", line);
+                printf("%d: bad lvalue of pre-increment\n", lineno);
                 exit(-1);
             }
             *++text = PUSH;
             *++text = IMM;
-            *++text = (exp_type > PTR) ? sizeof(int) : sizeof(char);
+            *++text = (exp_type > PTR) ? sizeof(long long) : sizeof(char);
             *++text = (temp == Inc) ? ADD : SUB;
             *++text = (exp_type == CHAR) ? SC : SI;
         }
         else
         {
-            cout << "wrong prefix or expression! in line "
+            cout << "wrong prefix or expression! in lineno "
                  << lineno << endl;
         }
     }
@@ -331,7 +330,7 @@ void exp(int level)
                 }
                 else
                 {
-                    cout << "bad lvalue in assignment" << line;
+                    cout << "bad lvalue in assignment" << lineno;
                     exit(-1);
                 }
                 exp(Assign);
@@ -352,7 +351,7 @@ void exp(int level)
                 }
                 else
                 {
-                    cout << "missing colon in conditional " << line << endl;
+                    cout << "missing colon in conditional " << lineno << endl;
                     exit(-1);
                 }
                 *addr = (int)(text + 3);
@@ -368,7 +367,7 @@ void exp(int level)
                 *++text = JNZ;
                 addr = ++text;
                 exp(Lan);
-                *addr = (int)(text + 1);
+                *addr = (long long)(text++);
                 exp_type = INT;
             }
             else if (token == Lan)
@@ -378,7 +377,7 @@ void exp(int level)
                 *++text = JZ;
                 addr = ++text;
                 exp(Or);
-                *addr = (int)(text + 1);
+                *addr = (long long)(text++);
                 exp_type = INT;
             }
             else if (token == Or)
@@ -493,7 +492,7 @@ void exp(int level)
                     // pointer type, and not `char *`
                     *++text = PUSH;
                     *++text = IMM;
-                    *++text = sizeof(int);
+                    *++text = sizeof(long long);
                     *++text = MUL;
                 }
                 *++text = ADD;
@@ -510,7 +509,7 @@ void exp(int level)
                     *++text = SUB;
                     *++text = PUSH;
                     *++text = IMM;
-                    *++text = sizeof(int);
+                    *++text = sizeof(long long);
                     *++text = DIV;
                     exp_type = INT;
                 }
@@ -519,7 +518,7 @@ void exp(int level)
                     // pointer movement
                     *++text = PUSH;
                     *++text = IMM;
-                    *++text = sizeof(int);
+                    *++text = sizeof(long long);
                     *++text = MUL;
                     *++text = SUB;
                     exp_type = temp;
@@ -575,18 +574,18 @@ void exp(int level)
                 }
                 else
                 {
-                    cout << "bad value in increment" << line << endl;
+                    cout << "bad value in increment" << lineno << endl;
                     exit(-1);
                 }
 
                 *++text = PUSH;
                 *++text = IMM;
-                *++text = (exp_type > PTR) ? sizeof(int) : sizeof(char);
+                *++text = (exp_type > PTR) ? sizeof(long long) : sizeof(char);
                 *++text = (token == Inc) ? ADD : SUB;
                 *++text = (exp_type == CHAR) ? SC : SI;
                 *++text = PUSH;
                 *++text = IMM;
-                *++text = (exp_type > PTR) ? sizeof(int) : sizeof(char);
+                *++text = (exp_type > PTR) ? sizeof(long long) : sizeof(char);
                 *++text = (token == Inc) ? SUB : ADD;
                 match(token);
             }
@@ -603,12 +602,12 @@ void exp(int level)
                     // pointer, `not char *`
                     *++text = PUSH;
                     *++text = IMM;
-                    *++text = sizeof(int);
+                    *++text = sizeof(long long);
                     *++text = MUL;
                 }
                 else if (temp < PTR)
                 {
-                    printf("%d: pointer type expected\n", line);
+                    printf("%d: pointer type expected\n", lineno);
                     exit(-1);
                 }
                 exp_type = temp - PTR;
@@ -617,7 +616,7 @@ void exp(int level)
             }
             else
             {
-                printf("%d: compiler error, token = %d\n", line, token);
+                printf("%d: compiler error, token = %d\n", lineno, token);
                 exit(-1);
             }
         }
