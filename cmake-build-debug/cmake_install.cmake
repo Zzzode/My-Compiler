@@ -1,4 +1,4 @@
-# Install script for directory: D:/OneDrive/workspace/Visual Studio/My Compiler
+# Install script for directory: D:/OneDrive/workspace/CLion_Projects/My Compiler
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -40,5 +40,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "D:/OneDrive/workspace/Visual Studio/My Compiler/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "D:/OneDrive/workspace/CLion_Projects/My Compiler/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

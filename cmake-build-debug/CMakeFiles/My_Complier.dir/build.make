@@ -42,10 +42,10 @@ RM = "D:\Program Files\JetBrains\CLion 2019.1.2\bin\cmake\win\bin\cmake.exe" -E 
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = "D:\OneDrive\workspace\Visual Studio\My Compiler"
+CMAKE_SOURCE_DIR = "D:\OneDrive\workspace\CLion_Projects\My Compiler"
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = "D:\OneDrive\workspace\Visual Studio\My Compiler\cmake-build-debug"
+CMAKE_BINARY_DIR = "D:\OneDrive\workspace\CLion_Projects\My Compiler\cmake-build-debug"
 
 # Include any dependencies generated for this target.
 include CMakeFiles/My_Complier.dir/depend.make
@@ -58,68 +58,68 @@ include CMakeFiles/My_Complier.dir/flags.make
 
 CMakeFiles/My_Complier.dir/c_minus.cpp.obj: CMakeFiles/My_Complier.dir/flags.make
 CMakeFiles/My_Complier.dir/c_minus.cpp.obj: ../c_minus.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="D:\OneDrive\workspace\Visual Studio\My Compiler\cmake-build-debug\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/My_Complier.dir/c_minus.cpp.obj"
-	F:\MinGW_w64\mingw64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\My_Complier.dir\c_minus.cpp.obj -c "D:\OneDrive\workspace\Visual Studio\My Compiler\c_minus.cpp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="D:\OneDrive\workspace\CLion_Projects\My Compiler\cmake-build-debug\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/My_Complier.dir/c_minus.cpp.obj"
+	F:\MinGW_w64\mingw64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\My_Complier.dir\c_minus.cpp.obj -c "D:\OneDrive\workspace\CLion_Projects\My Compiler\c_minus.cpp"
 
 CMakeFiles/My_Complier.dir/c_minus.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/My_Complier.dir/c_minus.cpp.i"
-	F:\MinGW_w64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "D:\OneDrive\workspace\Visual Studio\My Compiler\c_minus.cpp" > CMakeFiles\My_Complier.dir\c_minus.cpp.i
+	F:\MinGW_w64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "D:\OneDrive\workspace\CLion_Projects\My Compiler\c_minus.cpp" > CMakeFiles\My_Complier.dir\c_minus.cpp.i
 
 CMakeFiles/My_Complier.dir/c_minus.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/My_Complier.dir/c_minus.cpp.s"
-	F:\MinGW_w64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "D:\OneDrive\workspace\Visual Studio\My Compiler\c_minus.cpp" -o CMakeFiles\My_Complier.dir\c_minus.cpp.s
+	F:\MinGW_w64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "D:\OneDrive\workspace\CLion_Projects\My Compiler\c_minus.cpp" -o CMakeFiles\My_Complier.dir\c_minus.cpp.s
 
 CMakeFiles/My_Complier.dir/get_token.cpp.obj: CMakeFiles/My_Complier.dir/flags.make
 CMakeFiles/My_Complier.dir/get_token.cpp.obj: ../get_token.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="D:\OneDrive\workspace\Visual Studio\My Compiler\cmake-build-debug\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/My_Complier.dir/get_token.cpp.obj"
-	F:\MinGW_w64\mingw64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\My_Complier.dir\get_token.cpp.obj -c "D:\OneDrive\workspace\Visual Studio\My Compiler\get_token.cpp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="D:\OneDrive\workspace\CLion_Projects\My Compiler\cmake-build-debug\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/My_Complier.dir/get_token.cpp.obj"
+	F:\MinGW_w64\mingw64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\My_Complier.dir\get_token.cpp.obj -c "D:\OneDrive\workspace\CLion_Projects\My Compiler\get_token.cpp"
 
 CMakeFiles/My_Complier.dir/get_token.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/My_Complier.dir/get_token.cpp.i"
-	F:\MinGW_w64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "D:\OneDrive\workspace\Visual Studio\My Compiler\get_token.cpp" > CMakeFiles\My_Complier.dir\get_token.cpp.i
+	F:\MinGW_w64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "D:\OneDrive\workspace\CLion_Projects\My Compiler\get_token.cpp" > CMakeFiles\My_Complier.dir\get_token.cpp.i
 
 CMakeFiles/My_Complier.dir/get_token.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/My_Complier.dir/get_token.cpp.s"
-	F:\MinGW_w64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "D:\OneDrive\workspace\Visual Studio\My Compiler\get_token.cpp" -o CMakeFiles\My_Complier.dir\get_token.cpp.s
+	F:\MinGW_w64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "D:\OneDrive\workspace\CLion_Projects\My Compiler\get_token.cpp" -o CMakeFiles\My_Complier.dir\get_token.cpp.s
 
 CMakeFiles/My_Complier.dir/syntax.cpp.obj: CMakeFiles/My_Complier.dir/flags.make
 CMakeFiles/My_Complier.dir/syntax.cpp.obj: ../syntax.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="D:\OneDrive\workspace\Visual Studio\My Compiler\cmake-build-debug\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/My_Complier.dir/syntax.cpp.obj"
-	F:\MinGW_w64\mingw64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\My_Complier.dir\syntax.cpp.obj -c "D:\OneDrive\workspace\Visual Studio\My Compiler\syntax.cpp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="D:\OneDrive\workspace\CLion_Projects\My Compiler\cmake-build-debug\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/My_Complier.dir/syntax.cpp.obj"
+	F:\MinGW_w64\mingw64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\My_Complier.dir\syntax.cpp.obj -c "D:\OneDrive\workspace\CLion_Projects\My Compiler\syntax.cpp"
 
 CMakeFiles/My_Complier.dir/syntax.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/My_Complier.dir/syntax.cpp.i"
-	F:\MinGW_w64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "D:\OneDrive\workspace\Visual Studio\My Compiler\syntax.cpp" > CMakeFiles\My_Complier.dir\syntax.cpp.i
+	F:\MinGW_w64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "D:\OneDrive\workspace\CLion_Projects\My Compiler\syntax.cpp" > CMakeFiles\My_Complier.dir\syntax.cpp.i
 
 CMakeFiles/My_Complier.dir/syntax.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/My_Complier.dir/syntax.cpp.s"
-	F:\MinGW_w64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "D:\OneDrive\workspace\Visual Studio\My Compiler\syntax.cpp" -o CMakeFiles\My_Complier.dir\syntax.cpp.s
+	F:\MinGW_w64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "D:\OneDrive\workspace\CLion_Projects\My Compiler\syntax.cpp" -o CMakeFiles\My_Complier.dir\syntax.cpp.s
 
 CMakeFiles/My_Complier.dir/expression.cpp.obj: CMakeFiles/My_Complier.dir/flags.make
 CMakeFiles/My_Complier.dir/expression.cpp.obj: ../expression.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="D:\OneDrive\workspace\Visual Studio\My Compiler\cmake-build-debug\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/My_Complier.dir/expression.cpp.obj"
-	F:\MinGW_w64\mingw64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\My_Complier.dir\expression.cpp.obj -c "D:\OneDrive\workspace\Visual Studio\My Compiler\expression.cpp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="D:\OneDrive\workspace\CLion_Projects\My Compiler\cmake-build-debug\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/My_Complier.dir/expression.cpp.obj"
+	F:\MinGW_w64\mingw64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\My_Complier.dir\expression.cpp.obj -c "D:\OneDrive\workspace\CLion_Projects\My Compiler\expression.cpp"
 
 CMakeFiles/My_Complier.dir/expression.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/My_Complier.dir/expression.cpp.i"
-	F:\MinGW_w64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "D:\OneDrive\workspace\Visual Studio\My Compiler\expression.cpp" > CMakeFiles\My_Complier.dir\expression.cpp.i
+	F:\MinGW_w64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "D:\OneDrive\workspace\CLion_Projects\My Compiler\expression.cpp" > CMakeFiles\My_Complier.dir\expression.cpp.i
 
 CMakeFiles/My_Complier.dir/expression.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/My_Complier.dir/expression.cpp.s"
-	F:\MinGW_w64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "D:\OneDrive\workspace\Visual Studio\My Compiler\expression.cpp" -o CMakeFiles\My_Complier.dir\expression.cpp.s
+	F:\MinGW_w64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "D:\OneDrive\workspace\CLion_Projects\My Compiler\expression.cpp" -o CMakeFiles\My_Complier.dir\expression.cpp.s
 
 CMakeFiles/My_Complier.dir/vmachine.cpp.obj: CMakeFiles/My_Complier.dir/flags.make
 CMakeFiles/My_Complier.dir/vmachine.cpp.obj: ../vmachine.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="D:\OneDrive\workspace\Visual Studio\My Compiler\cmake-build-debug\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/My_Complier.dir/vmachine.cpp.obj"
-	F:\MinGW_w64\mingw64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\My_Complier.dir\vmachine.cpp.obj -c "D:\OneDrive\workspace\Visual Studio\My Compiler\vmachine.cpp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="D:\OneDrive\workspace\CLion_Projects\My Compiler\cmake-build-debug\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/My_Complier.dir/vmachine.cpp.obj"
+	F:\MinGW_w64\mingw64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\My_Complier.dir\vmachine.cpp.obj -c "D:\OneDrive\workspace\CLion_Projects\My Compiler\vmachine.cpp"
 
 CMakeFiles/My_Complier.dir/vmachine.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/My_Complier.dir/vmachine.cpp.i"
-	F:\MinGW_w64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "D:\OneDrive\workspace\Visual Studio\My Compiler\vmachine.cpp" > CMakeFiles\My_Complier.dir\vmachine.cpp.i
+	F:\MinGW_w64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "D:\OneDrive\workspace\CLion_Projects\My Compiler\vmachine.cpp" > CMakeFiles\My_Complier.dir\vmachine.cpp.i
 
 CMakeFiles/My_Complier.dir/vmachine.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/My_Complier.dir/vmachine.cpp.s"
-	F:\MinGW_w64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "D:\OneDrive\workspace\Visual Studio\My Compiler\vmachine.cpp" -o CMakeFiles\My_Complier.dir\vmachine.cpp.s
+	F:\MinGW_w64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "D:\OneDrive\workspace\CLion_Projects\My Compiler\vmachine.cpp" -o CMakeFiles\My_Complier.dir\vmachine.cpp.s
 
 # Object files for target My_Complier
 My_Complier_OBJECTS = \
@@ -141,7 +141,7 @@ My_Complier.exe: CMakeFiles/My_Complier.dir/build.make
 My_Complier.exe: CMakeFiles/My_Complier.dir/linklibs.rsp
 My_Complier.exe: CMakeFiles/My_Complier.dir/objects1.rsp
 My_Complier.exe: CMakeFiles/My_Complier.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir="D:\OneDrive\workspace\Visual Studio\My Compiler\cmake-build-debug\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_6) "Linking CXX executable My_Complier.exe"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir="D:\OneDrive\workspace\CLion_Projects\My Compiler\cmake-build-debug\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_6) "Linking CXX executable My_Complier.exe"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles\My_Complier.dir\link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -154,6 +154,6 @@ CMakeFiles/My_Complier.dir/clean:
 .PHONY : CMakeFiles/My_Complier.dir/clean
 
 CMakeFiles/My_Complier.dir/depend:
-	$(CMAKE_COMMAND) -E cmake_depends "MinGW Makefiles" "D:\OneDrive\workspace\Visual Studio\My Compiler" "D:\OneDrive\workspace\Visual Studio\My Compiler" "D:\OneDrive\workspace\Visual Studio\My Compiler\cmake-build-debug" "D:\OneDrive\workspace\Visual Studio\My Compiler\cmake-build-debug" "D:\OneDrive\workspace\Visual Studio\My Compiler\cmake-build-debug\CMakeFiles\My_Complier.dir\DependInfo.cmake" --color=$(COLOR)
+	$(CMAKE_COMMAND) -E cmake_depends "MinGW Makefiles" "D:\OneDrive\workspace\CLion_Projects\My Compiler" "D:\OneDrive\workspace\CLion_Projects\My Compiler" "D:\OneDrive\workspace\CLion_Projects\My Compiler\cmake-build-debug" "D:\OneDrive\workspace\CLion_Projects\My Compiler\cmake-build-debug" "D:\OneDrive\workspace\CLion_Projects\My Compiler\cmake-build-debug\CMakeFiles\My_Complier.dir\DependInfo.cmake" --color=$(COLOR)
 .PHONY : CMakeFiles/My_Complier.dir/depend
 

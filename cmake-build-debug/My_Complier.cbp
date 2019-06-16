@@ -8,18 +8,18 @@
 		<Option virtualFolders="CMake Files\;"/>
 		<Build>
 			<Target title="all">
-				<Option working_dir="D:/OneDrive/workspace/Visual Studio/My Compiler/cmake-build-debug"/>
+				<Option working_dir="D:/OneDrive/workspace/CLion_Projects/My Compiler/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="F:/MinGW_w64/mingw64/bin/mingw32-make.exe -f &quot;D:/OneDrive/workspace/Visual Studio/My Compiler/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
-					<CompileFile command="F:/MinGW_w64/mingw64/bin/mingw32-make.exe -f &quot;D:/OneDrive/workspace/Visual Studio/My Compiler/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="F:/MinGW_w64/mingw64/bin/mingw32-make.exe -f &quot;D:/OneDrive/workspace/Visual Studio/My Compiler/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="F:/MinGW_w64/mingw64/bin/mingw32-make.exe -f &quot;D:/OneDrive/workspace/Visual Studio/My Compiler/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="F:/MinGW_w64/mingw64/bin/mingw32-make.exe -f &quot;D:/OneDrive/workspace/CLion_Projects/My Compiler/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="F:/MinGW_w64/mingw64/bin/mingw32-make.exe -f &quot;D:/OneDrive/workspace/CLion_Projects/My Compiler/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="F:/MinGW_w64/mingw64/bin/mingw32-make.exe -f &quot;D:/OneDrive/workspace/CLion_Projects/My Compiler/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="F:/MinGW_w64/mingw64/bin/mingw32-make.exe -f &quot;D:/OneDrive/workspace/CLion_Projects/My Compiler/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="My_Complier">
-				<Option output="D:/OneDrive/workspace/Visual Studio/My Compiler/cmake-build-debug/My_Complier.exe" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="D:/OneDrive/workspace/Visual Studio/My Compiler/cmake-build-debug"/>
+				<Option output="D:/OneDrive/workspace/CLion_Projects/My Compiler/cmake-build-debug/My_Complier.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="D:/OneDrive/workspace/CLion_Projects/My Compiler/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
@@ -32,15 +32,15 @@
 					<Add directory="F:/MinGW_w64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/../../../../x86_64-w64-mingw32/include"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="F:/MinGW_w64/mingw64/bin/mingw32-make.exe -f &quot;D:/OneDrive/workspace/Visual Studio/My Compiler/cmake-build-debug/Makefile&quot;  VERBOSE=1 My_Complier"/>
-					<CompileFile command="F:/MinGW_w64/mingw64/bin/mingw32-make.exe -f &quot;D:/OneDrive/workspace/Visual Studio/My Compiler/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="F:/MinGW_w64/mingw64/bin/mingw32-make.exe -f &quot;D:/OneDrive/workspace/Visual Studio/My Compiler/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="F:/MinGW_w64/mingw64/bin/mingw32-make.exe -f &quot;D:/OneDrive/workspace/Visual Studio/My Compiler/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="F:/MinGW_w64/mingw64/bin/mingw32-make.exe -f &quot;D:/OneDrive/workspace/CLion_Projects/My Compiler/cmake-build-debug/Makefile&quot;  VERBOSE=1 My_Complier"/>
+					<CompileFile command="F:/MinGW_w64/mingw64/bin/mingw32-make.exe -f &quot;D:/OneDrive/workspace/CLion_Projects/My Compiler/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="F:/MinGW_w64/mingw64/bin/mingw32-make.exe -f &quot;D:/OneDrive/workspace/CLion_Projects/My Compiler/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="F:/MinGW_w64/mingw64/bin/mingw32-make.exe -f &quot;D:/OneDrive/workspace/CLion_Projects/My Compiler/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="My_Complier/fast">
-				<Option output="D:/OneDrive/workspace/Visual Studio/My Compiler/cmake-build-debug/My_Complier.exe" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="D:/OneDrive/workspace/Visual Studio/My Compiler/cmake-build-debug"/>
+				<Option output="D:/OneDrive/workspace/CLion_Projects/My Compiler/cmake-build-debug/My_Complier.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="D:/OneDrive/workspace/CLion_Projects/My Compiler/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
@@ -53,55 +53,55 @@
 					<Add directory="F:/MinGW_w64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/../../../../x86_64-w64-mingw32/include"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="F:/MinGW_w64/mingw64/bin/mingw32-make.exe -f &quot;D:/OneDrive/workspace/Visual Studio/My Compiler/cmake-build-debug/Makefile&quot;  VERBOSE=1 My_Complier/fast"/>
-					<CompileFile command="F:/MinGW_w64/mingw64/bin/mingw32-make.exe -f &quot;D:/OneDrive/workspace/Visual Studio/My Compiler/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="F:/MinGW_w64/mingw64/bin/mingw32-make.exe -f &quot;D:/OneDrive/workspace/Visual Studio/My Compiler/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="F:/MinGW_w64/mingw64/bin/mingw32-make.exe -f &quot;D:/OneDrive/workspace/Visual Studio/My Compiler/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="F:/MinGW_w64/mingw64/bin/mingw32-make.exe -f &quot;D:/OneDrive/workspace/CLion_Projects/My Compiler/cmake-build-debug/Makefile&quot;  VERBOSE=1 My_Complier/fast"/>
+					<CompileFile command="F:/MinGW_w64/mingw64/bin/mingw32-make.exe -f &quot;D:/OneDrive/workspace/CLion_Projects/My Compiler/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="F:/MinGW_w64/mingw64/bin/mingw32-make.exe -f &quot;D:/OneDrive/workspace/CLion_Projects/My Compiler/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="F:/MinGW_w64/mingw64/bin/mingw32-make.exe -f &quot;D:/OneDrive/workspace/CLion_Projects/My Compiler/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="edit_cache">
-				<Option working_dir="D:/OneDrive/workspace/Visual Studio/My Compiler/cmake-build-debug"/>
+				<Option working_dir="D:/OneDrive/workspace/CLion_Projects/My Compiler/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="F:/MinGW_w64/mingw64/bin/mingw32-make.exe -f &quot;D:/OneDrive/workspace/Visual Studio/My Compiler/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
-					<CompileFile command="F:/MinGW_w64/mingw64/bin/mingw32-make.exe -f &quot;D:/OneDrive/workspace/Visual Studio/My Compiler/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="F:/MinGW_w64/mingw64/bin/mingw32-make.exe -f &quot;D:/OneDrive/workspace/Visual Studio/My Compiler/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="F:/MinGW_w64/mingw64/bin/mingw32-make.exe -f &quot;D:/OneDrive/workspace/Visual Studio/My Compiler/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="F:/MinGW_w64/mingw64/bin/mingw32-make.exe -f &quot;D:/OneDrive/workspace/CLion_Projects/My Compiler/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="F:/MinGW_w64/mingw64/bin/mingw32-make.exe -f &quot;D:/OneDrive/workspace/CLion_Projects/My Compiler/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="F:/MinGW_w64/mingw64/bin/mingw32-make.exe -f &quot;D:/OneDrive/workspace/CLion_Projects/My Compiler/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="F:/MinGW_w64/mingw64/bin/mingw32-make.exe -f &quot;D:/OneDrive/workspace/CLion_Projects/My Compiler/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="rebuild_cache">
-				<Option working_dir="D:/OneDrive/workspace/Visual Studio/My Compiler/cmake-build-debug"/>
+				<Option working_dir="D:/OneDrive/workspace/CLion_Projects/My Compiler/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="F:/MinGW_w64/mingw64/bin/mingw32-make.exe -f &quot;D:/OneDrive/workspace/Visual Studio/My Compiler/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
-					<CompileFile command="F:/MinGW_w64/mingw64/bin/mingw32-make.exe -f &quot;D:/OneDrive/workspace/Visual Studio/My Compiler/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="F:/MinGW_w64/mingw64/bin/mingw32-make.exe -f &quot;D:/OneDrive/workspace/Visual Studio/My Compiler/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="F:/MinGW_w64/mingw64/bin/mingw32-make.exe -f &quot;D:/OneDrive/workspace/Visual Studio/My Compiler/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="F:/MinGW_w64/mingw64/bin/mingw32-make.exe -f &quot;D:/OneDrive/workspace/CLion_Projects/My Compiler/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="F:/MinGW_w64/mingw64/bin/mingw32-make.exe -f &quot;D:/OneDrive/workspace/CLion_Projects/My Compiler/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="F:/MinGW_w64/mingw64/bin/mingw32-make.exe -f &quot;D:/OneDrive/workspace/CLion_Projects/My Compiler/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="F:/MinGW_w64/mingw64/bin/mingw32-make.exe -f &quot;D:/OneDrive/workspace/CLion_Projects/My Compiler/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="D:/OneDrive/workspace/Visual Studio/My Compiler/c_minus.cpp">
+		<Unit filename="D:/OneDrive/workspace/CLion_Projects/My Compiler/c_minus.cpp">
 			<Option target="My_Complier"/>
 		</Unit>
-		<Unit filename="D:/OneDrive/workspace/Visual Studio/My Compiler/c_minus.h">
+		<Unit filename="D:/OneDrive/workspace/CLion_Projects/My Compiler/c_minus.h">
 			<Option target="My_Complier"/>
 		</Unit>
-		<Unit filename="D:/OneDrive/workspace/Visual Studio/My Compiler/expression.cpp">
+		<Unit filename="D:/OneDrive/workspace/CLion_Projects/My Compiler/expression.cpp">
 			<Option target="My_Complier"/>
 		</Unit>
-		<Unit filename="D:/OneDrive/workspace/Visual Studio/My Compiler/get_token.cpp">
+		<Unit filename="D:/OneDrive/workspace/CLion_Projects/My Compiler/get_token.cpp">
 			<Option target="My_Complier"/>
 		</Unit>
-		<Unit filename="D:/OneDrive/workspace/Visual Studio/My Compiler/syntax.cpp">
+		<Unit filename="D:/OneDrive/workspace/CLion_Projects/My Compiler/syntax.cpp">
 			<Option target="My_Complier"/>
 		</Unit>
-		<Unit filename="D:/OneDrive/workspace/Visual Studio/My Compiler/vmachine.cpp">
+		<Unit filename="D:/OneDrive/workspace/CLion_Projects/My Compiler/vmachine.cpp">
 			<Option target="My_Complier"/>
 		</Unit>
-		<Unit filename="D:/OneDrive/workspace/Visual Studio/My Compiler/vmachine.h">
+		<Unit filename="D:/OneDrive/workspace/CLion_Projects/My Compiler/vmachine.h">
 			<Option target="My_Complier"/>
 		</Unit>
-		<Unit filename="D:/OneDrive/workspace/Visual Studio/My Compiler/CMakeLists.txt">
+		<Unit filename="D:/OneDrive/workspace/CLion_Projects/My Compiler/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>
 	</Project>
