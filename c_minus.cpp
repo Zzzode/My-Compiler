@@ -46,9 +46,10 @@ char *sys[8] = {"open", "read", "close", "printf",
  * pop back when leave a local area
  */
 vector<unordered_map<int, ID>> symtab(1);
-unordered_map<int, int*> func_inst; // + fun_para
-unordered_map<int, int*> func_var; // + fun_var
-// vector<unordered_map<int, ID>> ID_MAIN;
+//TODO add function stack
+unordered_map<int, vector<int>> func_inst; // + fun_para
+unordered_map<int, vector<int>> func_var; // + fun_var
+//int * 数组不太好动态伸缩长度，这里改用vector变长数组
 
 //calculat the hash value of an id
 int hash_str(char *s)
@@ -80,7 +81,6 @@ void open_src(int fd, char **argv)
     src[n] = '\0'; //add EOF
     close(fd);
 
-    //TODO check buffer malloc, change to windows API
 }
 
 void init_symtab(int fd, char **argv) //put build-in function into symtab
@@ -101,11 +101,9 @@ void init_symtab(int fd, char **argv) //put build-in function into symtab
         symtab[0][hash].Class = Sys;    //system function
         symtab[0][hash].Type = INT;     //variable data type or function return type
         symtab[0][hash].In_value = j++; //build-in function type
-        strcpy(symtab[0][hash].Name, sys[i]);
+        strcpy(symtab[0][hash].Name, sys[i]);//TODO initiate system function instruction stack
     }
-
-    //TODO"void" and "main"
-    //TODO add system function source
+    
     next(); symtab[0][hash].TOKEN = Char; // handle void type
     next(); ID_MAIN = symtab[0][hash].addr;   // keep track of main
 
@@ -145,8 +143,6 @@ int main(int argc, char **argv)
 
     program();
 
-    // 如果没有main()函数
-    // TODO: main()?
     if (!(PC = ID_MAIN))
     {
         cout << "main() not defined" << endl;

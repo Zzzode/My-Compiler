@@ -65,7 +65,7 @@ void exp(int level)
             exp_type = Con_Char;
             //
             *++text = IMM;
-            *++text = token_in_val; //TODO 改成 token_in_val
+            *++text = token_in_val; 
         }
         else if (token == Sizeof) //sizeof(typename) or sizeof(variable)
         {
@@ -110,7 +110,7 @@ void exp(int level)
             match(')');
 
             *++text = IMM;
-            *++text = (exp_type == CHAR) ? sizeof(char) : sizeof(long long); // TODO: 如果是double？
+            *++text = (exp_type == CHAR) ? sizeof(char) : sizeof(long long); 
             //TODO char、int、double返回对应sizeof， 剩余均为指针类型
 
             exp_type = INT;
@@ -122,7 +122,6 @@ void exp(int level)
             if (token == '(') //function call
             {   //add func_paras
                 match('(');
-                // TODO: Fix all the func paras between "(" ")" √
                 temp = 0; // number of arguments
                 while (token != ')')
                 {
@@ -138,15 +137,13 @@ void exp(int level)
                 match(')');
             }
             else if (symtab[layer][Hash].Type == Con_Int) //enum
-            { // TODO: Fix it
+            { 
                 *++text = IMM;
                 *++text = symtab[layer][Hash].In_value;
                 exp_type = INT;
             }
             else
-            {
-                // variable
-                // TODO: 这里似乎没有分局部变量和全局变量？
+            {// variable
                 if (symtab[layer][Hash].Class == Var)
                 {
                     if(symtab[layer][Hash].Type != DOUBLE){
@@ -159,11 +156,6 @@ void exp(int level)
                         *++text = index_of_bp - symtab[layer][Hash].In_value;
                     }
                 }
-                /*else//TODO可以去掉，变量声明检查在词法程序里面已有
-                {
-                    printf("%d: undefined variable\n", lineno);
-                    exit(-1);
-                }*/
 
                 // default behaviour is to load the value of the
                 // address which is stored in `ax`

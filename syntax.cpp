@@ -14,12 +14,15 @@ extern bool is_decl;
 extern int token_in_val;
 extern double token_d_val;
 extern vector<unordered_map<int, ID>> symtab;
+extern unordered_map<int, int *> func_inst;
+extern unordered_map<int, int *> func_var;
 extern char *reserve[12];
 
 // match this character then go next
 void match(int tk)
 {
-    if (token == tk) {
+    if (token == tk)
+    {
         next();
     }
     else
@@ -71,7 +74,6 @@ void glo_decl()
         decl_type = CHAR;
         match(Char);
     }
-
     while (token == Mul) //use offset to mark pointer
     {
         match(Mul);
@@ -102,7 +104,7 @@ void glo_decl()
     else //global variable declaration
     {
         symtab[0][Hash].Class = Var;
-        if (token == Assign) //assign is not necessary
+        if (token == Assign) //assign is optional
         {
             match(Assign);
             if (decl_type == DOUBLE)
@@ -129,24 +131,28 @@ void glo_decl()
         }
         else if (token == '[')
         {
-            int temp = Hash; //store the last id
+            int temp = Hash; //store the last id, otherwise the id in [] may overload
             match('[');
             symtab[0][Hash].Type += PTR;
+            int len = 0;
             if (token == Con_Int)
             {
                 match(Con_Int);
-                symtab[0][Hash].len = token_in_val; //mark array size
+                len = token_in_val;
             }
             else if (token == Id)
             {
-                if (symtab[0][Hash].Type != Int || symtab[0][Hash].In_value == 0)
+                if (symtab[0][temp].Type != Int || symtab[0][temp].In_value == 0)
                 {
                     cout << "array size erro! in line " << lineno << endl;
                     exit(1);
                 }
+                len = symtab[0][temp].In_value;
                 match(Id);
-                symtab[0][temp].len = symtab[0][Hash].In_value;
             }
+            symtab[0][temp].len = len;           //mark array size
+            symtab[0][temp].addr = new int[len]; // malloc address for array
+            //TODO consider how to delete the allocated memory of the array when leave scope
             match(']');
         }
         while (token != ';')
@@ -154,7 +160,7 @@ void glo_decl()
             match(',');
             match(Id);
             symtab[0][Hash].Class = Var;
-            if (token == Assign) //assign is not necessary
+            if (token == Assign) //assign is optional
             {
                 match(Assign);
                 if (decl_type == DOUBLE)
@@ -181,24 +187,28 @@ void glo_decl()
             }
             else if (token == '[')
             {
-                int temp = Hash;//store the last id
+                int temp = Hash; //store the last id, otherwise the id in [] may overload
                 match('[');
                 symtab[0][Hash].Type += PTR;
-                if(token == Con_Int)
+                int len = 0;
+                if (token == Con_Int)
                 {
                     match(Con_Int);
-                    symtab[0][Hash].len = token_in_val; //mark array size
+                    len = token_in_val;
                 }
-                else if(token == Id)
+                else if (token == Id)
                 {
-                    if (symtab[0][Hash].Type != Int || symtab[0][Hash].In_value == 0)
+                    if (symtab[0][temp].Type != Int || symtab[0][temp].In_value == 0)
                     {
                         cout << "array size erro! in line " << lineno << endl;
                         exit(1);
                     }
+                    len = symtab[0][temp].In_value;
                     match(Id);
-                    symtab[0][temp].len = symtab[0][Hash].In_value;
                 }
+                symtab[0][temp].len = len;           //mark array size
+                symtab[0][temp].addr = new int[len]; // malloc address for array
+                //TODO consider how to delete the allocated memory of the array when leave scope
                 match(']');
             }
         }
@@ -233,7 +243,7 @@ void enum_decl()
 }
 
 //var_decl : type {'*'} id {'=' num}{ ',' id {'=' num}} ';'
-//TODO: add variable to stack
+//TODO: add variable to function stack
 void var_decl()
 {
     decl_type = token;
@@ -348,8 +358,8 @@ void var_decl()
 }
 
 //func_para : type {'*'} id {',' type {'*'} id}
-//TODO add parameters to function stack
-//TODO add pass like int a[]
+//TODO add parameters to function variable stack
+//TODO add pass like int a[], add pass by reference
 void func_para()
 {
     if (token == Int)
@@ -364,13 +374,22 @@ void func_para()
         exit(1);
     }
     decl_type = token;
-
     while (token == Mul)
     {
         match(Mul);
         decl_type += PTR;
     }
+    if (token == Lan) //TODO &, pass by reference
+    {
+    }
     match(Id);
+    if (token == '[') //TODO pass array
+    {
+        match('[');
+        //
+        match(']');
+        //
+    }
     while (token != ')')
     {
         match(',');
@@ -393,11 +412,22 @@ void func_para()
             decl_type += PTR;
         }
         match(Id);
+        if (token == Lan) //TODO &, pass by reference
+        {
+        }
+        match(Id);
+        if (token == '[') //TODO pass array
+        {
+            match('[');
+            //
+            match(']');
+            //
+        }
     }
 }
 
 //func_body : {var_decl} {stmt}
-//TODO add function body to code area
+//TODO add function body to function instruction
 void func_body()
 {
     if (token == '{') //enter a nest scope

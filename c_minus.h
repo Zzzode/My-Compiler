@@ -30,11 +30,10 @@ struct ID{
     // int TOKEN;
     int Class;            //function or variable
     int Type;             //type of variable, for function is INT
-    int* addr;
+    int* addr;            //address of a variable, function or array
     int len;              //array size
     int In_value;         //value of int type or address or char
     double D_value;       //value of double type
-    char Name[64];        //id name string, max length is 63
 };
 
 //get the next token

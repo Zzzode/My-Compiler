@@ -38,7 +38,7 @@ void next()
         }
 
         // char literal constant ,we only support the escape of \n, \t, \r, '\\'
-        else if (token == '\'') // TODO ! '\''?
+        else if (token == '\'') 
         {
             token = Con_Char;
             token_in_val = *(src++);  //store char as int type
@@ -70,7 +70,8 @@ void next()
         else if (token == '"') //string literal constant
         {
             int cnt = 0; // max string length
-            while ((token = *(src++)) != '"' && cnt < 63) //max string layergth is 63
+            while ((token = *(src++)) != '"' && cnt < 63) //max string length is 63
+            //TODO add EOF juegement, add security control
             {
                 if (token == '\\')
                 {
@@ -238,7 +239,7 @@ void next()
             Hash = token;
             int index = 0;
             char temp[64];
-            temp[index++] = token; // TODO: i, b missing
+            temp[index++] = token; 
             token = *src++;
             while (isalpha(token) || isdigit(token) || (token == '_'))
             {
@@ -253,7 +254,7 @@ void next()
                 }
             }
             temp[index] = '\0';
-            src--;
+            src--;//go back
             token = Id;
 
             //return reserve words
@@ -261,10 +262,11 @@ void next()
             for (int i = 0; i < 9; i++, j++)
             {
                 if (strcmp(temp, reserve[i]) == 0)
+                {
                     token = j;
+                    return;
+                }
             }
-            if (token != Id)
-                return;
 
             if (is_decl) //in declaration sentence
             {
@@ -276,18 +278,15 @@ void next()
                 }
                 else
                 {
-                    strcpy(symtab.back()[Hash].Name, temp);
                     symtab.back()[Hash].Type = decl_type; //inherit type
-                    symtab.back()[Hash].In_value = 0;
-                    symtab.back()[Hash].D_value = 0;
-                    //default value is 0
-                    //not sure it's a function or variable, dealing in syntax part
+                    symtab.back()[Hash].In_value = symtab.back()[Hash].D_value = 0;
+                    //default value is 0,not sure it's a function or variable, dealing in syntax part
                 }
             }
-            else
+            else//call of a known identifier
             {
                 int layer = symtab.size();
-                while (layer--)
+                while (layer--)//find the variable in which layer
                 {
                     if (symtab[layer].find(Hash) != symtab[layer].end())
                         break;
