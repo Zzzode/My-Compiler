@@ -13,11 +13,11 @@ extern int index_of_bp;                   // 栈bp指针的index
 
 // V_STACK CODE, STATIC, HEAP, STACK; // 四大内存区域
 
-extern int *text,                         // text segment
-        *old_text,                     // for dump text segment
-        *stack;                        // stack
+extern int *text, // 用于存放代码（指令）
+    *old_text,    // for dump text segment
+    *stack;       // 处理函数调用相关的数据，如调用帧（calling frame）或是局部变量等。
 
-extern char *data;                        // data segment
+extern char *data; // 用于存放初始化了的数据，如int i = 10;
 
 extern int *PC, *BP, *SP, AX, cycle;      // 寄存器
 extern int *current_Id, *symbols;         // ID和符号表

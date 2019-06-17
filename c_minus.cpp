@@ -84,7 +84,8 @@ void open_src(int fd, char **argv)
 
 }
 
-void init_symtab(int fd, char **argv) //put build-in function into symtab
+//put build-in function into symtab
+void init_symtab(int fd, char **argv)
 {
     int i;
     int hash;
@@ -104,7 +105,7 @@ void init_symtab(int fd, char **argv) //put build-in function into symtab
         symtab[0][hash].In_value = j++; //build-in function type
         strcpy(symtab[0][hash].Name, sys[i]);//TODO initiate system function instruction stack
     }
-    
+
     next(); symtab[0][hash].TOKEN = Char; // handle void type
     next(); ID_MAIN = symtab[0][hash].addr;   // keep track of main
 
@@ -132,24 +133,30 @@ void init_symtab(int fd, char **argv) //put build-in function into symtab
 
 int main(int argc, char **argv)
 {
-    int fd;
+    int fd; // linux系统调用文件操作
     int *temp;
 
     argc--;
     argv++;
 
+    /*  初始化编译器系统  */
     open_src(fd, argv);
     initVirtulMachine();
     init_symtab(fd, argv);
+    /* 初始化完毕 */
 
+    /* program: {glo_decl}+ */
     program();
 
+    /* 如果没有main() */
     if (!(PC = ID_MAIN))
     {
         cout << "main() not defined" << endl;
         return -1;
     }
+
     // 初始化虚拟机的栈，当 main 函数结束时退出进程
+    // stack位栈段，地址为栈底地址
     SP = (int *)((long long)(stack) + poolsize);
     *--SP = EXIT; // call exit if main returns
     *--SP = PUSH;
