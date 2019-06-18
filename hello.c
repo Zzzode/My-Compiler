@@ -10,6 +10,7 @@ int fibonacci(int i) {
 int main()
 {
     int i;
+    i = abc;
     i = 0;
     while (i <= 10) {
         printf("fibonacci(%2d) = %d\n", i, fibonacci(i));

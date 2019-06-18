@@ -18,14 +18,14 @@ int token;      //type of the token we got
 int lineno = 1; //line number of program
 int decl_type;  //type of the whole declaration
 int exp_type;   //type of expression answer
-int Hash;       //mark the cuurent id in lexical
+long long Hash;       //mark the cuurent id in lexical
 int layer;      //mark which layer an id belongs to in symtab
 
 bool is_decl = true;
 //when lexical parse an id, judge legal or not
 //if in decl mode, new id can be add into symtab, else illegal
 
-int token_in_val = 0;   //literal int value
+int token_val = 0;      //default literal int value
 double token_d_val = 0; //literal double value
 char token_str_val[64]; //store literal constant of string
 // char *src;              //buffer of file input
@@ -46,16 +46,17 @@ char *sys[8] = {"open", "read", "close", "printf",
  * push back when enter a local area
  * pop back when leave a local area
  */
-vector<unordered_map<int, ID>> symtab(1);
+vector<unordered_map<long long, ID>> symtab(1);
+vector<unordered_map<long long, ID>> ID_MAIN(1);
 //TODO add function stack
-unordered_map<int, vector<int>> func_inst; // + fun_para
-unordered_map<int, vector<int>> func_var; // + fun_var
+//unordered_map<int, vector<int>> func_inst; // + fun_para
+//unordered_map<int, vector<int>> func_var; // + fun_var
 //int * 数组不太好动态伸缩长度，这里改用vector变长数组
 
 //calculat the hash value of an id
-int hash_str(char *s)
+long long hash_str(char *s)
 {
-    int ans = 0;
+    long long ans = 0;
     while (*s != '\0')
         ans = ans * 147 + *s++;
     return ans;
@@ -88,13 +89,7 @@ void open_src(int fd, char **argv)
 void init_symtab(int fd, char **argv)
 {
     int i;
-    int hash;
-    /* int i = Char;
-    while (i <= While)
-    {
-        next();
-        current_id[Token] = i++;
-    }*/
+    long long hash;
     int j = OPEN;
 
     for (i = 0; i < 8; i++)
@@ -103,11 +98,13 @@ void init_symtab(int fd, char **argv)
         symtab[0][hash].Class = Sys;    //system function
         symtab[0][hash].Type = INT;     //variable data type or function return type
         symtab[0][hash].In_value = j++; //build-in function type
-        strcpy(symtab[0][hash].Name, sys[i]);//TODO initiate system function instruction stack
+        // TODO initiate system function instruction stack
+        symtab[0][hash].Name = sys[i];
     }
 
     next(); symtab[0][hash].TOKEN = Char; // handle void type
-    next(); ID_MAIN = symtab[0][hash].addr;   // keep track of main
+    next(); ID_MAIN[0][hash] = symtab[0][hash];   // keep track of main
+    ID_MAIN_addr = (int *)ID_MAIN[0][hash].In_value;
 
     // read the source file
     if ((fd = open(*argv, 0)) < 0)
@@ -139,6 +136,11 @@ int main(int argc, char **argv)
     argc--;
     argv++;
 
+    if (argc > 0 && **argv == '-' && (*argv)[1] == 's') {
+        assembly = 1;
+        --argc;
+        ++argv;
+    }
     /*  初始化编译器系统  */
     open_src(fd, argv);
     initVirtulMachine();
@@ -149,7 +151,7 @@ int main(int argc, char **argv)
     program();
 
     /* 如果没有main() */
-    if (!(PC = ID_MAIN))
+    if (!(PC = ID_MAIN_addr))
     {
         cout << "main() not defined" << endl;
         return -1;

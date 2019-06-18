@@ -9,13 +9,13 @@ using namespace std;
 extern int token;
 extern int lineno;
 extern int decl_type;
-extern int Hash;
+extern long long Hash;
 extern bool is_decl;
-extern int token_in_val;
+extern int token_val;
 extern double token_d_val;
-extern vector<unordered_map<int, ID>> symtab;
-extern unordered_map<int, int *> func_inst;
-extern unordered_map<int, int *> func_var;
+extern vector<unordered_map<long long, ID>> symtab;
+// extern unordered_map<int, int *> func_inst;
+// extern unordered_map<int, int *> func_var;
 extern char *reserve[12];
 
 // match this character then go next
@@ -92,9 +92,11 @@ void glo_decl()
     if (token == '(') //function
     {
         symtab[0][Hash].Class = Func;               //'(' didn't change hash of id
-        symtab.push_back(unordered_map<int, ID>{}); //enter scope of the function
+        symtab[0][Hash].In_value = (long long)(text + 1);
+        symtab.push_back(unordered_map<long long, ID>{}); //enter scope of the function
         match('(');
-        func_para();
+        if(token != ')')
+            func_para();
         match(')');
         match('{');
         func_body();
@@ -110,17 +112,20 @@ void glo_decl()
             if (decl_type == DOUBLE)
             {
                 match(Con_Double);
-                symtab[0][Hash].D_value = token_d_val;
+                symtab[0][Hash].In_value = (long long)data;
+                data = data + sizeof(int);
             }
             else if (decl_type == INT)
             {
                 match(Con_Int);
-                symtab[0][Hash].In_value = token_in_val;
+                symtab[0][Hash].In_value = (long long)data;
+                data = data + sizeof(int);
             }
             else if (decl_type == CHAR)
             {
                 match(Con_Char);
-                symtab[0][Hash].In_value = token_in_val;
+                symtab[0][Hash].In_value = (long long)data;
+                data = data + sizeof(int);
             }
             else //ptr type
             {
@@ -138,7 +143,7 @@ void glo_decl()
             if (token == Con_Int)
             {
                 match(Con_Int);
-                len = token_in_val;
+                len = token_val;
             }
             else if (token == Id)
             {
@@ -151,7 +156,7 @@ void glo_decl()
                 match(Id);
             }
             symtab[0][temp].len = len;           //mark array size
-            symtab[0][temp].addr = new int[len]; // malloc address for array
+            // symtab[0][temp].addr = new int[len]; // malloc address for array
             //TODO consider how to delete the allocated memory of the array when leave scope
             match(']');
         }
@@ -171,12 +176,12 @@ void glo_decl()
                 else if (decl_type == INT)
                 {
                     match(Con_Int);
-                    symtab[0][Hash].In_value = token_in_val;
+                    symtab[0][Hash].In_value = token_val;
                 }
                 else if (decl_type == CHAR)
                 {
                     match(Con_Char);
-                    symtab[0][Hash].In_value = token_in_val;
+                    symtab[0][Hash].In_value = token_val;
                 }
                 else //ptr type
                 {
@@ -194,7 +199,7 @@ void glo_decl()
                 if (token == Con_Int)
                 {
                     match(Con_Int);
-                    len = token_in_val;
+                    len = token_val;
                 }
                 else if (token == Id)
                 {
@@ -207,7 +212,7 @@ void glo_decl()
                     match(Id);
                 }
                 symtab[0][temp].len = len;           //mark array size
-                symtab[0][temp].addr = new int[len]; // malloc address for array
+                // symtab[0][temp].addr = new int[len]; // malloc address for array
                 //TODO consider how to delete the allocated memory of the array when leave scope
                 match(']');
             }
@@ -227,7 +232,7 @@ void enum_decl()
     match(Id);
     match(Assign);
     match(Con_Int);
-    symtab[0][Hash].In_value = token_in_val;
+    symtab[0][Hash].In_value = token_val;
     symtab[0][Hash].Class = Var;
     symtab[0][Hash].Type = Con_Int;
     while (token != '}')
@@ -236,7 +241,7 @@ void enum_decl()
         match(Id);
         match(Assign);
         match(Con_Int);
-        symtab[0][Hash].In_value = token_in_val;
+        symtab[0][Hash].In_value = token_val;
         symtab[0][Hash].Class = Var;
     }
     match('}');
@@ -246,7 +251,7 @@ void enum_decl()
 //TODO: add variable to function stack
 void var_decl()
 {
-    decl_type = token;
+    /*decl_type = token;
     match(token);
     while (token == Mul)
     {
@@ -265,12 +270,12 @@ void var_decl()
         else if (decl_type == Int)
         {
             match(Con_Int);
-            symtab.back()[Hash].In_value = token_in_val;
+            symtab.back()[Hash].In_value = token_val;
         }
         else if (decl_type == Char)
         {
             match(Con_Char);
-            symtab.back()[Hash].In_value = token_in_val;
+            symtab.back()[Hash].In_value = token_val;
         }
         else if (decl_type > PTR)
         {
@@ -279,7 +284,7 @@ void var_decl()
             exit(1);
         }
     }
-    else if (token == '[')
+    else if (token == '[') // 数组形式[]
     {
         int temp = Hash; //store the last id
         match('[');
@@ -287,7 +292,7 @@ void var_decl()
         if (token == Con_Int)
         {
             match(Con_Int);
-            symtab.back()[Hash].len = token_in_val; //mark array size
+            symtab.back()[Hash].len = token_val; //mark array size
         }
         else if (token == Id)
         {
@@ -300,12 +305,21 @@ void var_decl()
             symtab.back()[temp].len = symtab.back()[Hash].In_value;
         }
         match(']');
-    }
+    }*/
     while (token != ';')
     {
-        match(',');
+        if(token == Int)
+            exp_type = INT;
+        else if(token == Char)
+            exp_type = CHAR;
+        else if(token == Double)
+            exp_type = DOUBLE;
+
+        match(token);
         match(Id);
+
         symtab.back()[Hash].Class = Var;
+        symtab.back()[Hash].Type = exp_type;
         if (token == Assign) //assign while declaration
         {
             match(Assign);
@@ -317,12 +331,12 @@ void var_decl()
             else if (decl_type == Int)
             {
                 match(Con_Int);
-                symtab.back()[Hash].In_value = token_in_val;
+                symtab.back()[Hash].In_value = token_val;
             }
             else if (decl_type == Char)
             {
                 match(Con_Char);
-                symtab.back()[Hash].In_value = token_in_val;
+                symtab.back()[Hash].In_value = token_val;
             }
             else if (decl_type > PTR)
             {
@@ -339,7 +353,7 @@ void var_decl()
             if (token == Con_Int)
             {
                 match(Con_Int);
-                symtab.back()[Hash].len = token_in_val; //mark array size
+                symtab.back()[Hash].len = token_val; //mark array size
             }
             else if (token == Id)
             {
@@ -353,7 +367,10 @@ void var_decl()
             }
             match(']');
         }
+        if(token == ',')
+            match(',');
     }
+    is_decl = false;
     match(';');
 }
 
@@ -362,39 +379,51 @@ void var_decl()
 //TODO add pass like int a[], add pass by reference
 void func_para()
 {
-    if (token == Int)
-        match(Int);
-    else if (token == Char)
-        match(Char);
-    else if (token == Double)
-        match(Double);
-    else
-    {
-        cout << "unknowm type in line " << lineno << endl;
-        exit(1);
+    int type;
+    int params;
+    params = 0;
+    while(token != ')') {
+        if (token == Int) {
+            type = INT;
+            match(Int);
+        } else if (token == Char) {
+            type = CHAR;
+            match(Char);
+        } else if (token == Double) {
+            type = DOUBLE;
+            match(Double);
+        } else {
+            cout << "unknown type in line " << lineno << endl;
+            exit(1);
+        }
+        decl_type = type;
+        while (token == Mul) {
+            match(Mul);
+            decl_type += PTR;
+        }
+        if (token == Lan) //TODO 引用传递，暂时跳过
+        {
+        }
+        match(Id);
+        if (token == '[') //TODO 数组，暂时跳过
+        {
+            match('[');
+            //
+            match(']');
+            //
+        }
+        // store the local variable
+        symtab.back()[Hash].Type = type;
+        symtab.back()[Hash].Class  = Var;
+        symtab.back()[Hash].In_value  = params++;   // index of current parameter
+        if(token == ',')
+            match(',');
     }
-    decl_type = token;
-    while (token == Mul)
-    {
-        match(Mul);
-        decl_type += PTR;
-    }
-    if (token == Lan) //TODO &, pass by reference
-    {
-    }
-    match(Id);
-    if (token == '[') //TODO pass array
-    {
-        match('[');
-        //
-        match(']');
-        //
-    }
-    while (token != ')')
+/*    while (token != ')')
     {
         match(',');
         if (token == Int)
-            match(INT);
+            match(Int);
         else if (token == Char)
             match(Char);
         else if (token == Double)
@@ -423,16 +452,21 @@ void func_para()
             match(']');
             //
         }
-    }
+    }*/
+    index_of_bp = params+1;
 }
 
 //func_body : {var_decl} {stmt}
 //TODO add function body to function instruction
 void func_body()
 {
+    int pos_local; // position of local variables on the stack.
+    int type;
+    pos_local = index_of_bp;
+
     if (token == '{') //enter a nest scope
     {
-        symtab.push_back(unordered_map<int, ID>{});
+        symtab.push_back(unordered_map<long long, ID>{});
         match('{');
         func_body();
         symtab.pop_back(); //leave scope
@@ -445,30 +479,40 @@ void func_body()
         var_decl();
         if (token == '{') //enter a nest scope
         {
-            symtab.push_back(unordered_map<int, ID>{});
+            symtab.push_back(unordered_map<long long, ID>{});
             match('{');
             func_body();
             symtab.pop_back(); //leave scope
             match('}');
         }
     }
+    // save the stack size for local variables
+    *++text = ENT;
+    *++text = pos_local - index_of_bp;
 
     //statements
     is_decl = false;
     while (token != '}')
         stmt();
+
+    *++text = LEV;
 }
 
 //stmt : empty_stmt | no_empty_stmt
 //no_empty_stmt : if_stmt | while_stmt | '{' stmt '}' | 'return' exp ';' | exp ';'
 void stmt()
 {
+    int *a, *b;
     if (token == If) //if stmt
     {
         match(If);
         match('(');
         exp(Assign); //control sentence
         match(')');
+
+        *++text = JZ;
+        b = ++text;
+
         stmt(); //in case of true
         if (token == Else)
         {
@@ -479,14 +523,20 @@ void stmt()
     else if (token == While) //while loop
     {
         match(While);
+        a = text + 1;
         match('(');
         exp(Assign);
         match(')');
+        *++text = JZ;
+        b = ++text;
         stmt();
+        *++text = JMP;
+        *++text = (long long)a;
+        *b = (long long)(text + 1);
     }
     else if (token == '{') //nest scope
     {
-        symtab.push_back(unordered_map<int, ID>{});
+        symtab.push_back(unordered_map<long long, ID>{});
         match('{');
         while (token != '}')
             stmt();
@@ -499,6 +549,8 @@ void stmt()
         if (token != ';')
             exp(Assign);
         match(';');
+
+        *++text = LEV;
     }
     else if (token == ';') //empty stmt
     {

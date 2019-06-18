@@ -4,18 +4,20 @@
 ![Author](https://img.shields.io/badge/Author-Zzzcode-blue.svg?style=flat)
 
 <!-- TOC -->
-- [Simple C Compiler](#simple-c-compiler)
-  - [Introduction](#introduction)
-  - [Environment](#environment)
-  - [Instruction](#instruction)
-  - [Architecture](#architecture)
-  - [ChangeLog](#changelog)
+- [Simple C Compiler](#Simple-C-Compiler)
+  - [Introduction](#Introduction)
+  - [Environment](#Environment)
+  - [Instruction](#Instruction)
+  - [Architecture](#Architecture)
+  - [ChangeLog](#ChangeLog)
     - [v0.0(2019-05-23)](#v002019-05-23)
     - [v0.0(2019-05-25)](#v002019-05-25)
     - [v0.1(2019-06-16)](#v012019-06-16)
-  - [Declaration](#declaration)
-  - [FAQ](#faq)
-  - [Thanks](#thanks)
+    - [v0.2(2019-06-18)](#v022019-06-18)
+  - [Declaration](#Declaration)
+  - [FAQ](#FAQ)
+  - [Thanks](#Thanks)
+  - [More](#More)
 
 ## Introduction
 
@@ -52,6 +54,10 @@
 ### v0.1(2019-06-16)
 
 完成了整体项目的开发，不过有些语法问题，有待修改，程序并不能正常运行。
+
+### v0.2(2019-06-18)
+
+完成了汇编代码生成的所有模块，虚拟机还存在部分问题。
 
 ## Declaration
 

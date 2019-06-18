@@ -8,13 +8,13 @@ using namespace std;
 extern int token;
 extern int lineno;
 extern int decl_type;
-extern int Hash;
+extern long long Hash;
 extern int layer;
 extern int exp_type;
 extern bool is_decl;
-extern int token_in_val;
+extern int token_val;
 extern double token_d_val;
-extern vector<unordered_map<int, ID>> symtab;
+extern vector<unordered_map<long long, ID>> symtab;
 
 /**
  * @Author: zxhcho, Zzzode
@@ -41,7 +41,7 @@ void exp(int level)
             exp_type = Con_Int;
 
             *++text = IMM;
-            *++text = token_in_val;
+            *++text = token_val;
         }
         else if (token == Con_Double)
         {
@@ -57,7 +57,7 @@ void exp(int level)
             exp_type = Con_Str;
             //
             *++text = IMM;
-            *++text = token_in_val; // TODO: 需要把字符串转换成二进制
+            *++text = token_val; // TODO: 需要把字符串转换成二进制
         }
         else if (token == Con_Char)
         {
@@ -65,7 +65,7 @@ void exp(int level)
             exp_type = Con_Char;
             //
             *++text = IMM;
-            *++text = token_in_val; 
+            *++text = token_val; 
         }
         else if (token == Sizeof) //sizeof(typename) or sizeof(variable)
         {
@@ -119,6 +119,7 @@ void exp(int level)
         //TODO 调用函数栈，函数参数压栈。pc指向函数指令栈；函数活动记录
         { //function call or variable or enum constant(can't be assign again)
             match(Id);
+            long long Hash_temp = Hash; //!
             if (token == '(') //function call
             {   //add func_paras
                 match('(');
@@ -135,6 +136,28 @@ void exp(int level)
                     }
                 }
                 match(')');
+                Hash = Hash_temp;
+                // emit code
+                if (symtab[0][Hash].Class == Sys) {
+                    // system functions
+                    *++text = symtab[0][Hash].In_value;
+                }
+                else if (symtab[0][Hash].Class == Func) {
+                    // function call
+                    *++text = CALL;
+                    *++text = symtab[0][Hash].In_value;
+                }
+                else {
+                    printf("line %d: Bad function call\n", lineno);
+                    exit(-1);
+                }
+
+                // clean the stack for arguments
+                if (temp > 0) {
+                    *++text = ADJ;
+                    *++text = temp;
+                }
+                exp_type = symtab[0][Hash].Type;
             }
             else if (symtab[layer][Hash].Type == Con_Int) //enum
             { 
@@ -254,7 +277,7 @@ void exp(int level)
             if (token == Con_Int) //negative literal constant
             {
                 *++text = IMM;
-                *++text = -token_in_val;
+                *++text = -token_val;
                 match(Con_Int);
             }
             else if (token == Con_Double){

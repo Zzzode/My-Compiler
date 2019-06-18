@@ -31,7 +31,7 @@ char *data; // d用于存放初始化了的数据，如int i = 10;
 
 int *PC, *BP, *SP, AX, cycle; // 寄存器, SP++为弹栈，SP--为压栈
 int *current_Id, *symbols;    // ID和符号表
-int *ID_MAIN;                 // main函数
+int *ID_MAIN_addr;                 // main函数
 
 char *src, *oldsrc; // 指向代码字符串的指针
 char *DATA;         // 数据段
@@ -77,8 +77,9 @@ void initVirtulMachine()
     BP = SP = (int *)((int *)stack + poolsize);
     AX = 0;
 
-    src = "char else enum if int return sizeof while "
-          "open read close printf malloc memset memcmp exit void main";
+    src = //"char else enum if int return sizeof while "
+          //"open read close printf malloc memset memcmp exit"
+          "void main";
 }
 
 // 虚拟机

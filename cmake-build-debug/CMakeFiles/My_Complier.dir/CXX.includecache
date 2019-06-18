@@ -32,49 +32,7 @@ D:/OneDrive/workspace/CLion_Projects/My Compiler/vmachine.h
 
 D:/OneDrive/workspace/CLion_Projects/My Compiler/c_minus.h
 
-D:/OneDrive/workspace/CLion_Projects/My Compiler/expression.cpp
-iostream
--
-unordered_map
--
-vector
--
-c_minus.h
-D:/OneDrive/workspace/CLion_Projects/My Compiler/c_minus.h
-vmachine.h
-D:/OneDrive/workspace/CLion_Projects/My Compiler/vmachine.h
-
-D:/OneDrive/workspace/CLion_Projects/My Compiler/get_token.cpp
-iostream
--
-string.h
--
-cctype
--
-vector
--
-unordered_map
--
-c_minus.h
-D:/OneDrive/workspace/CLion_Projects/My Compiler/c_minus.h
-vmachine.h
-D:/OneDrive/workspace/CLion_Projects/My Compiler/vmachine.h
-
 D:/OneDrive/workspace/CLion_Projects/My Compiler/stack.h
-
-D:/OneDrive/workspace/CLion_Projects/My Compiler/syntax.cpp
-iostream
--
-stdlib.h
--
-unordered_map
--
-vector
--
-c_minus.h
-D:/OneDrive/workspace/CLion_Projects/My Compiler/c_minus.h
-vmachine.h
-D:/OneDrive/workspace/CLion_Projects/My Compiler/vmachine.h
 
 D:/OneDrive/workspace/CLion_Projects/My Compiler/vmachine.h
 stack.h

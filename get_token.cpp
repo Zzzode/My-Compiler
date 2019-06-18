@@ -11,65 +11,100 @@ using namespace std;
 extern int token;
 extern int lineno;
 extern int decl_type;
-extern int Hash;
+extern long long Hash;
 extern int layer;
 extern bool is_decl;
-extern int token_in_val;
+extern int token_val;
 extern double token_d_val;
 extern char token_str_val[64];
-extern vector<unordered_map<int, ID>> symtab;
+extern vector<unordered_map<long long, ID>> symtab;
 extern char *reserve[12];
-extern char *src;
+extern char *src, *oldsrc;
 
+//匹配下一个token
 void next()
 {
+    char *last_pos;
+
     while ((token = *(src++)))
     {
-        if (token == '\n')
+        if (token == '[' || token == ']' || token == '?' || token == '~' || token == '(' || token == ')' || token == ';' || token == '{' || token == '}' || token == ':' || token == ','/*|| token == EOF*/)
+            return;
+        else if (token == '\n') {
+            if (assembly) {
+                // print compile info
+                printf("%d: %.*s", lineno, src - oldsrc, oldsrc);
+                oldsrc = src;
+
+                while (old_text < text) {
+                    printf("%8.4s", &"LEA ,IMM ,JMP ,CALL,JZ  ,JNZ ,ENT ,ADJ ,LEV ,LI  ,LC  ,SI  ,SC  ,PUSH,"
+                                     "OR  ,XOR ,AND ,EQ  ,NE  ,LT  ,GT  ,LE  ,GE  ,SHL ,SHR ,ADD ,SUB ,MUL ,DIV ,MOD ,"
+                                     "OPEN,READ,CLOS,PRTF,MALC,MSET,MCMP,EXIT"[*++old_text * 5]);
+
+                    if (*old_text <= ADJ)
+                        printf(" %d\n", *++old_text);
+                    else
+                        printf("\n");
+                }
+            }
             lineno++;
-
-        else if (isspace(token))
+        }
+        else if (isspace(token)) // 如果碰到空格，跳过，其实也可以什么都不做
             continue;
-
-        else if (token == '#') //skip the macro, not supported
-        {
+        else if (token == '#')
+        {   //skip the macro, not supported
             while (*src != 0 && *src != '\n')
                 src++;
         }
-
-        // char literal constant ,we only support the escape of \n, \t, \r, '\\'
-        else if (token == '\'') 
-        {
-            token = Con_Char;
-            token_in_val = *(src++);  //store char as int type
-            if (token_in_val == '\\') //escape charactor
-            {
-                if (*src == 'n')
-                    token_in_val = '\n';
-                else if (*src == 't')
-                    token_in_val = '\t';
-                else if (*src == 'r')
-                    token_in_val = '\r';
-                else if (*src == '\\')
-                    token_in_val = '\\';
-                else
+        else if (token == '"' || token == '\'')
+        {   // char literal constant
+            // we only support the escape of \n, \t, \r, '\\'
+            int cnt = 0;
+            last_pos = data;
+            while(*src != 0 && *src != token) {
+                cnt++;
+                token_val = *(src++);  //store char as int type
+                if (token_val == '\\') //escape charactor
                 {
-                    cout << "wrong escape charactor! in line " << lineno << endl;
-                    exit(1);
+                    if (*src == 'n')
+                        token_val = '\n';
+                    else if (*src == 't')
+                        token_val = '\t';
+                    else if (*src == 'r')
+                        token_val = '\r';
+                    else if (*src == '\\')
+                        token_val = '\\';
+                    else {
+                        cout << "wrong escape charactor! in line " << lineno << endl;
+                        exit(1);
+                    }
+                    src++;
                 }
-                ++src;
+                if (token == '"') {
+                    *data++ = token_val;
+                    // token = Con_Str;
+                }
+                if(cnt > 64)
+                    cout << "string overflow in line " << lineno << endl;
             }
-            if (*src != '\'')
-            {
-                cout << "lack \' of literal charactor in line " << lineno << endl;
-                exit(1);
+            ++src;
+            if (token == '"') {
+                token_val = (long long)last_pos;
+                token = Con_Str;
+            } else {
+                token = Con_Char;
             }
+//            if (*src != '\'')
+//            {
+//                cout << "lack \' of literal charactor in line " << lineno << endl;
+//                exit(1);
+//            }
             return;
         }
-
-        else if (token == '"') //string literal constant
-        {
+/*        else if (token == '"')
+        {   //string literal constant
             int cnt = 0; // max string length
+            last_pos = data;
             while ((token = *(src++)) != '"' && cnt < 63) //max string length is 63
             //TODO add EOF juegement, add security control
             {
@@ -96,8 +131,7 @@ void next()
             }
             token = Con_Str;
             return;
-        }
-
+        }*/
         else if (token == '/') //comment or divide
         {
             if (*src == '/') //skip comments
@@ -285,7 +319,7 @@ void next()
             }
             else//call of a known identifier
             {
-                int layer = symtab.size();
+                layer = symtab.size();
                 while (layer--)//find the variable in which layer
                 {
                     if (symtab[layer].find(Hash) != symtab[layer].end())
@@ -303,16 +337,16 @@ void next()
 
         else if (isdigit(token)) //in case of  positive int or double
         {
-            token_in_val = token - '0';
+            token_val = token - '0';
             while (isdigit(token = *(src++)))
-                token_in_val = token_in_val * 10 + token - '0';
+                token_val = token_val * 10 + token - '0';
             token = Con_Int;
             src--;
             if (*src == '.')
             {
                 src++;
                 double dot = 0.1;
-                token_d_val = token_in_val;
+                token_d_val = token_val;
                 while (isdigit(token = *(src++)))
                 {
                     token_d_val += dot * (token - '0');
@@ -324,9 +358,9 @@ void next()
             return;
         }
 
-        else if (token == '[' || token == ']' || token == '?' || token == '~' || token == '(' || token == ')' || token == ';' || token == '{' || token == '}' || token == ':')
+        /*else if (token == '[' || token == ']' || token == '?' || token == '~' || token == '(' || token == ')' || token == ';' || token == '{' || token == '}' || token == ':')
             return;
-
+*/
         else //illegal charactor
         {
             cout << "illegal charactor in line " << lineno << endl;

@@ -6,7 +6,7 @@
 extern int token;      //type of the token we got
 extern int decl_type;  //type of the whole declaration
 extern int exp_type;   //type of expression answer
-extern int Hash;       //mark the cuurent id in lexical
+extern long long Hash;       //mark the cuurent id in lexical
 extern int layer;      //mark which layer an id belongs to in symtab
 
 // tokens and classes ,start from 128 to avoid system char
@@ -31,9 +31,9 @@ struct ID{
     int TOKEN;
     int Class;            //function or variable
     int Type;             //type of variable, for function is INT
-    int* addr;            //address of a variable, function or array
+//    int addr;            //address of a variable, function or array
     int len;              //array size
-    int In_value;         //value of int type or address or char
+    long long In_value;         //value of int type or address or char
     double D_value;       //value of double type
 };
 
