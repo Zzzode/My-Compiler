@@ -23,13 +23,14 @@ int poolsize; // 内存区域大小
 
 int index_of_bp; // 栈bp指针的index
 
-int *text,     // 用于存放代码（指令）
+long long *text,     // 用于存放代码（指令）
     *old_text, // for dump text segment
     *stack;    // 处理函数调用相关的数据，如调用帧（calling frame）或是局部变量等。
 
 char *data; // d用于存放初始化了的数据，如int i = 10;
 
-int *PC, *BP, *SP, AX, cycle; // 寄存器, SP++为弹栈，SP--为压栈
+long long *PC, *BP, *SP;
+long long AX, cycle; // 寄存器, SP++为弹栈，SP--为压栈
 int *current_Id, *symbols;    // ID和符号表
 int *ID_MAIN_addr;                 // main函数
 
@@ -46,7 +47,7 @@ void initVirtulMachine()
 
     // allocate memory for virtual machine
     // 给虚拟机分配空间
-    if (!(text = (int *)malloc(poolsize)))
+    if (!(text = (long long *)malloc(poolsize)))
     {
         printf("could not malloc(%d) for text area\n", poolsize);
         exit(1);
@@ -56,25 +57,25 @@ void initVirtulMachine()
         printf("could not malloc(%d) for data area\n", poolsize);
         exit(1);
     }
-    if (!(stack = (int *)malloc(poolsize)))
+    if (!(stack = (long long *)malloc(poolsize)))
     {
         printf("could not malloc(%d) for stack area\n", poolsize);
         exit(1);
     }
-    if (!(symbols = (int *)malloc(poolsize)))
+    /*if (!(symbols = (int *)malloc(poolsize)))
     {
         printf("could not malloc(%d) for symbol table\n", poolsize);
         exit(1);
-    }
+    }*/
 
     memset(text, 0, poolsize);
     memset(data, 0, poolsize);
     memset(stack, 0, poolsize);
-    memset(symbols, 0, poolsize);
+    // memset(symbols, 0, poolsize);
 
     old_text = text;
 
-    BP = SP = (int *)((int *)stack + poolsize);
+    BP = SP = (long long *)((long long *)stack + poolsize);
     AX = 0;
 
     src = //"char else enum if int return sizeof while "
@@ -85,7 +86,7 @@ void initVirtulMachine()
 // 虚拟机
 int eval()
 {
-    int op, *tmp;
+    long long op, *tmp;
     cycle = 0;
     while (1)
     {
@@ -130,20 +131,24 @@ int eval()
         } // push the value of AX onto the stack
         else if (op == JMP)
         {
-            PC = (int *)*PC;
+            PC = (long long *)*PC;
         } // jump to the address
         else if (op == JZ)
         {
-            PC = AX ? PC + 1 : (int *)*PC;
+            //？？
+            long long *pc_1;
+            pc_1 = PC+1;
+            pc_1 = (long long*)*PC;
+            PC = AX ? PC + 1 : (long long *)*PC;
         } // jump if AX is zero
         else if (op == JNZ)
         {
-            PC = AX ? (int *)*PC : PC + 1;
+            PC = AX ? (long long *)*PC : PC + 1;
         } // jump if AX is not zero
         else if (op == CALL)
         {
             *--SP = (long long)(PC + 1);
-            PC = (int *)*PC;
+            PC = (long long *)*PC;
         } // call subroutine
         //else if (op == RET)  {PC = (int *)*SP++;}                              // return from subroutine;
         else if (op == ENT)
@@ -159,8 +164,8 @@ int eval()
         else if (op == LEV)
         {
             SP = BP;
-            BP = (int *)*SP++;
-            PC = (int *)*SP++;
+            BP = (long long *)*SP++;
+            PC = (long long *)*SP++;
         } // restore call frame and PC
         else if (op == LEA)
         {
@@ -179,8 +184,11 @@ int eval()
             AX = *SP++ != AX;
         else if (op == LT)
             AX = *SP++ < AX;
-        else if (op == LE)
+        else if (op == LE) {
+            long long *sp_1 = SP+1;
+            long long ax_1 = *sp_1 <= AX;
             AX = *SP++ <= AX;
+        }
         else if (op == GT)
             AX = *SP++ > AX;
         else if (op == GE)

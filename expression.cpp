@@ -23,8 +23,8 @@ extern vector<unordered_map<long long, ID>> symtab;
  */
 void exp(int level)
 {
-    int temp;
-    int *addr;
+    long long temp;
+    long long *addr;
     //unary operator
     {
         if (!token)
@@ -49,7 +49,7 @@ void exp(int level)
             exp_type = Con_Double;
 
             *++text = IMM;
-            *++text = token_d_val; // TODO: 需要转换为IEEE浮点数存储
+            *++text = token_val; // TODO: 需要转换为IEEE浮点数存储
         }
         else if (token == Con_Str)
         {
@@ -282,7 +282,7 @@ void exp(int level)
             }
             else if (token == Con_Double){
                 *++text = IMM;
-                *++text = -token_d_val;
+                *++text = -token_val;
                 match(Con_Double);
             }
             else //negative variable

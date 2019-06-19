@@ -102,9 +102,9 @@ void init_symtab(int fd, char **argv)
         symtab[0][hash].Name = sys[i];
     }
 
-    next(); symtab[0][hash].TOKEN = Char; // handle void type
-    next(); ID_MAIN[0][hash] = symtab[0][hash];   // keep track of main
-    ID_MAIN_addr = (int *)ID_MAIN[0][hash].In_value;
+    next(); symtab[0][Hash].TOKEN = Char; // handle void type
+    next(); ID_MAIN[0][Hash] = symtab[0][Hash];   // keep track of main
+    //ID_MAIN_addr = (int *)ID_MAIN[0][hash].In_value;
 
     // read the source file
     if ((fd = open(*argv, 0)) < 0)
@@ -131,7 +131,7 @@ void init_symtab(int fd, char **argv)
 int main(int argc, char **argv)
 {
     int fd; // linux系统调用文件操作
-    int *temp;
+    long long *temp;
 
     argc--;
     argv++;
@@ -151,7 +151,7 @@ int main(int argc, char **argv)
     program();
 
     /* 如果没有main() */
-    if (!(PC = ID_MAIN_addr))
+    if (!(PC = (long long *)symtab[0][348352625].In_value))
     {
         cout << "main() not defined" << endl;
         return -1;
@@ -159,7 +159,7 @@ int main(int argc, char **argv)
 
     // 初始化虚拟机的栈，当 main 函数结束时退出进程
     // stack位栈段，地址为栈底地址
-    SP = (int *)((long long)(stack) + poolsize);
+    SP = (long long *)((long long)(stack) + poolsize);
     *--SP = EXIT; // call exit if main returns
     *--SP = PUSH;
     temp = SP;

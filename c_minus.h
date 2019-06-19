@@ -54,7 +54,7 @@ void glo_decl();
 void enum_decl();
 
 //var_decl : type {'*'} id {'=' num}{ ',' id {'=' num}} ';'
-void var_decl();
+int var_decl();
 
 //func_decl : type {'*'} id '(' func_para ')' '{' func_body '}'
 // void func_decl();

@@ -171,7 +171,7 @@ void glo_decl()
                 if (decl_type == DOUBLE)
                 {
                     match(Con_Double);
-                    symtab[0][Hash].D_value = token_d_val;
+                    symtab[0][Hash].D_value = token_val;
                 }
                 else if (decl_type == INT)
                 {
@@ -249,7 +249,7 @@ void enum_decl()
 
 //var_decl : type {'*'} id {'=' num}{ ',' id {'=' num}} ';'
 //TODO: add variable to function stack
-void var_decl()
+int var_decl()
 {
     /*decl_type = token;
     match(token);
@@ -306,6 +306,7 @@ void var_decl()
         }
         match(']');
     }*/
+    int pos_local = index_of_bp;
     while (token != ';')
     {
         if(token == Int)
@@ -320,23 +321,24 @@ void var_decl()
 
         symtab.back()[Hash].Class = Var;
         symtab.back()[Hash].Type = exp_type;
+        symtab.back()[Hash].In_value = ++pos_local;   // index of current parameter
         if (token == Assign) //assign while declaration
         {
             match(Assign);
             if (decl_type == Double)
             {
                 match(Con_Double);
-                symtab.back()[Hash].D_value = token_d_val;
+                symtab.back()[Hash].D_value = ++pos_local;;
             }
             else if (decl_type == Int)
             {
                 match(Con_Int);
-                symtab.back()[Hash].In_value = token_val;
+                symtab.back()[Hash].In_value = ++pos_local;;
             }
             else if (decl_type == Char)
             {
                 match(Con_Char);
-                symtab.back()[Hash].In_value = token_val;
+                symtab.back()[Hash].In_value = ++pos_local;;
             }
             else if (decl_type > PTR)
             {
@@ -372,6 +374,7 @@ void var_decl()
     }
     is_decl = false;
     match(';');
+    return pos_local;
 }
 
 //func_para : type {'*'} id {',' type {'*'} id}
@@ -476,7 +479,7 @@ void func_body()
     //local declarations
     while (token == Int || token == Char || token == Double)
     {
-        var_decl();
+        pos_local = var_decl();
         if (token == '{') //enter a nest scope
         {
             symtab.push_back(unordered_map<long long, ID>{});
@@ -502,7 +505,7 @@ void func_body()
 //no_empty_stmt : if_stmt | while_stmt | '{' stmt '}' | 'return' exp ';' | exp ';'
 void stmt()
 {
-    int *a, *b;
+    long long *a, *b;
     if (token == If) //if stmt
     {
         match(If);
@@ -517,6 +520,10 @@ void stmt()
         if (token == Else)
         {
             match(Else);
+            *b = (long long)(text + 3);
+            *++text = JMP;
+            b = ++text;
+
             stmt(); //in case of false
         }
     }
