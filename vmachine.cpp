@@ -80,7 +80,8 @@ void initVirtulMachine()
 
     src = //"char else enum if int return sizeof while "
           //"open read close printf malloc memset memcmp exit"
-          "void main";
+          "void";
+          //"main";
 }
 
 // 虚拟机

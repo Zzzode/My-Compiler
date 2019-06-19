@@ -59,6 +59,7 @@ void glo_decl()
     }
 
     //function or variable part
+    is_decl = true;
     if (token == Int)
     {
         decl_type = INT;
@@ -86,7 +87,7 @@ void glo_decl()
              << lineno << endl;
         exit(1);
     }
-    is_decl = true;
+
     match(Id); //function name or variable name
 
     if (token == '(') //function

@@ -103,7 +103,7 @@ void init_symtab(int fd, char **argv)
     }
 
     next(); symtab[0][Hash].TOKEN = Char; // handle void type
-    next(); ID_MAIN[0][Hash] = symtab[0][Hash];   // keep track of main
+    //next(); // ID_MAIN[0][Hash] = symtab[0][Hash];   // keep track of main
     //ID_MAIN_addr = (int *)ID_MAIN[0][hash].In_value;
 
     // read the source file
