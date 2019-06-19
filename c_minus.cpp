@@ -156,6 +156,11 @@ int main(int argc, char **argv)
         cout << "main() not defined" << endl;
         return -1;
     }
+    // dump_text();
+    if (assembly) {
+        // only for compile
+        return 0;
+    }
 
     // 初始化虚拟机的栈，当 main 函数结束时退出进程
     // stack位栈段，地址为栈底地址

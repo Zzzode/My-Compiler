@@ -6,23 +6,33 @@
 
 #IncludeRegexTransform: 
 
-D:/OneDrive/workspace/CLion_Projects/My Compiler/c_minus.h
-
-D:/OneDrive/workspace/CLion_Projects/My Compiler/stack.h
-
-D:/OneDrive/workspace/CLion_Projects/My Compiler/syntax.cpp
+D:/OneDrive/workspace/CLion_Projects/My Compiler/c_minus.cpp
 iostream
 -
-stdlib.h
+stdio.h
+-
+unistd.h
+-
+string.h
+-
+vector
 -
 unordered_map
 -
-vector
+fcntl.h
+-
+sys/types.h
+-
+sys/stat.h
 -
 c_minus.h
 D:/OneDrive/workspace/CLion_Projects/My Compiler/c_minus.h
 vmachine.h
 D:/OneDrive/workspace/CLion_Projects/My Compiler/vmachine.h
+
+D:/OneDrive/workspace/CLion_Projects/My Compiler/c_minus.h
+
+D:/OneDrive/workspace/CLion_Projects/My Compiler/stack.h
 
 D:/OneDrive/workspace/CLion_Projects/My Compiler/vmachine.h
 stack.h

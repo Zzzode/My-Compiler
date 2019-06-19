@@ -28,9 +28,7 @@ void next()
 
     while ((token = *(src++)))
     {
-        if (token == '[' || token == ']' || token == '?' || token == '~' || token == '(' || token == ')' || token == ';' || token == '{' || token == '}' || token == ':' || token == ','/*|| token == EOF*/)
-            return;
-        else if (token == '\n') {
+        if (token == '\n') {
             if (assembly) {
                 // print compile info
                 printf("%d: %.*s", lineno, src - oldsrc, oldsrc);
@@ -49,6 +47,8 @@ void next()
             }
             lineno++;
         }
+        else if (token == '[' || token == ']' || token == '?' || token == '~' || token == '(' || token == ')' || token == ';' || token == '{' || token == '}' || token == ':' || token == ','/*|| token == EOF*/)
+            return;
         else if (isspace(token)) // 如果碰到空格，跳过，其实也可以什么都不做
             continue;
         else if (token == '#')

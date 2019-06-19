@@ -14,6 +14,7 @@
     - [v0.0(2019-05-25)](#v002019-05-25)
     - [v0.1(2019-06-16)](#v012019-06-16)
     - [v0.2(2019-06-18)](#v022019-06-18)
+    - [v0.3(2019-06-19)](#v032019-06-19)
   - [Declaration](#Declaration)
   - [FAQ](#FAQ)
   - [Thanks](#Thanks)
@@ -25,9 +26,9 @@
 
 ## Environment
 
-- 系统：win10
+- 系统：win10/linux
 - IDE：Jerbrain Clion
-- 编译器：MinGW_w64
+- 编译器：MinGW_w64/g++
 - 工作语言：C++
 - 目标语言：C-
 - 实现目标语言编译器：C-
@@ -35,7 +36,11 @@
 
 ## Instruction
 
-暂无
+1. 生成汇编代码:
+`My_Complier.exe -s /.../helloworld.c`
+
+2. 直接运行:
+`My_Complier.exe /.../helloworld.c`
 
 ## Architecture
 
@@ -58,6 +63,10 @@
 ### v0.2(2019-06-18)
 
 完成了汇编代码生成的所有模块，虚拟机还存在部分问题。
+
+### v0.3(2019-06-19)
+
+修复了一些bug，添加了几个测试用例，虚拟机可以运行。
 
 ## Declaration
 
