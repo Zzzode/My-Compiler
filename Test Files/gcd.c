@@ -10,6 +10,6 @@ int gcd(int a, int b)
 
 int main()
 {
-    printf("%d",gcd(6,36)*gcd(3,6));
+    printf("%d\n",gcd(6,36)*gcd(3,6));
     return 0;
 }
